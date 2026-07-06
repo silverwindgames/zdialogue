@@ -1,0 +1,17 @@
+{
+  "projectFileVersion": 4,
+  "sourceFiles": [
+    "**/*.yarn"
+  ],
+  "excludeFiles": [],
+  "baseLanguage": "en",
+  "projectName": "demo",
+  "authorName": [
+    "mjakeman"
+  ],
+  "editorOptions": {
+    "yarnScriptEditor": {
+      "presenter": "try"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+title: Start
+---
+// =============================================================================
+// SKELETON STORY - Main Entry Point
+// =============================================================================
+// This node runs first. It declares all variables and jumps to the hub.
+// Variables MUST be declared before use - put them in your entry node.
+
+// DECLARING VARIABLES
+// Syntax: declare $variableName = defaultValue
+// Variables are prefixed with $ and can be strings, numbers, or booleans.
+// Once declared, they persist for the entire dialogue session.
+
+/// The player's display name used in dialogue.
+<<declare $player_name = "Player">>
+/// Whether the player has visited the Secondary Area.
+<<declare $visited_secondary = false>>
+/// Whether the player has visited the Tertiary Area.
+<<declare $visited_tertiary = false>>
+/// Whether the player has collected the Crystal from Blue.
+<<declare $has_crystal = false>>
+/// Whether the player has earned the Key from Red's challenge.
+<<declare $has_key = false>>
+/// Whether the player has received the Scroll from Lime.
+<<declare $has_scroll = false>>
+/// Trust level with Blue (0-2+). At 2+, Blue gives the Crystal.
+<<declare $blue_trust = 0>>
+/// Trust level with Green. Increases when learning about variables.
+<<declare $green_trust = 0>>
+/// Trust level with Red. Earned by answering quiz questions correctly.
+<<declare $red_trust = 0>>
+/// Trust level with Purple. Increases each visit.
+<<declare $purple_trust = 0>>
+/// Trust level with Lime (0-2+). At 2+, Lime gives the Scroll.
+<<declare $lime_trust = 0>>
+
+Narrator: Welcome to the Skeleton Story demonstration.
+Narrator: This project shows Yarn Spinner features without narrative content.
+
+// JUMP COMMAND
+// jump NodeName moves execution to another node permanently.
+// The current node ends and the target node begins.
+<<jump MainArea>>
+===
+title: MainArea
+---
+// =============================================================================
+// HUB NODE - Central location that branches to all areas
+// =============================================================================
+// This is the "hub" in a hub-and-spoke pattern. Players always return here.
+// Options change based on game state (visited areas, items collected).
+
+Narrator: You are in the Main Area. This is the central hub.
+
+// LINE GROUPS (SALIENCY)
+// Lines starting with the arrow-equals form a "line group". Yarn picks ONE
+// from the group based on which conditions are true. More specific conditions
+// are preferred. If no conditions match, an unconditional line is used.
+// This creates dynamic, context-aware dialogue without complex if/else chains.
+=> The area is quiet. <<if not $visited_secondary and not $visited_tertiary>>
+=> You've explored a bit now. <<if $visited_secondary or $visited_tertiary>>
+=> You've been everywhere! <<if $visited_secondary and $visited_tertiary>>
+
+// CONDITIONAL BLOCKS
+// if condition ... endif runs content only when condition is true.
+// Use elseif and else for multiple branches.
+<<if $blue_trust == 0>>
+    Blue waves from across the room.
+<<endif>>
+
+// OPTIONS WITH CONDITIONS
+// Add if condition after an option to show it only when true.
+// This creates dynamic menus that change based on game state.
+-> Talk to Blue
+    <<jump Blue_Dialogue>>
+-> Talk to Green <<if $visited_secondary>>
+    <<jump Green_Dialogue>>
+-> Go to Secondary Area
+    <<jump SecondaryArea>>
+-> Go to Tertiary Area <<if $has_key>>
+    <<jump TertiaryArea>>
+-> Check inventory
+    <<jump Inventory>>
+-> End demo
+    Narrator: Thanks for exploring the Skeleton Story!
+===
+title: Inventory
+---
+// =============================================================================
+// INVENTORY SYSTEM - Shows variable state checking
+// =============================================================================
+// Use if $variable to check booleans, or comparisons like $var == value.
+
+Narrator: Checking your inventory...
+
+<<if $has_crystal>>
+    You have the Crystal.
+<<else>>
+    You don't have the Crystal yet.
+<<endif>>
+
+<<if $has_key>>
+    You have the Key.
+<<else>>
+    You don't have the Key yet.
+<<endif>>
+
+<<if $has_scroll>>
+    You have the Scroll.
+<<else>>
+    You don't have the Scroll yet.
+<<endif>>
+
+-> Return
+    <<jump MainArea>>
+===

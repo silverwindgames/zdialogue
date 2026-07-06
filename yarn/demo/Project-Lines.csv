@@ -1,0 +1,157 @@
+id,text,file,node,lineNumber
+line:6e4c0b98,Narrator: Welcome to the Skeleton Story demonstration.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Start,37
+line:f87c0cef,Narrator: This project shows Yarn Spinner features without narrative content.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Start,38
+line:e76945c3,Narrator: You are in the Main Area. This is the central hub.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,53
+line:715942b4,The area is quiet.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,60
+line:d2cc262a,You've explored a bit now.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,61
+line:44fc215d,You've been everywhere!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,62
+line:fead28c4,Blue waves from across the room.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,68
+line:689d2fb3,Talk to Blue,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,74
+line:f9809023,Talk to Green,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,76
+line:6fb09754,Go to Secondary Area,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,78
+line:50be5be1,Go to Tertiary Area,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,80
+line:c68e5c96,Check inventory,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,82
+line:7cdf550f,End demo,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,84
+line:eaef5278,Narrator: Thanks for exploring the Skeleton Story!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,MainArea,85
+line:0a0fdf77,Narrator: Checking your inventory...,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Inventory,94
+line:9c3fd800,You have the Crystal.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Inventory,97
+line:266ed199,You don't have the Crystal yet.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Inventory,99
+line:b05ed6ee,You have the Key.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Inventory,103
+line:2143697e,You don't have the Key yet.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Inventory,105
+line:b7736e09,You have the Scroll.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Inventory,109
+line:d0989f5b,You don't have the Scroll yet.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Inventory,111
+line:46a8982c,Return,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/main.yarn,Inventory,114
+line:47d63c7d,Blue: Hello! I'm Blue. I demonstrate basic dialogue patterns.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,14
+line:d1e63b0a,Blue: Each line appears one at a time.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,15
+line:72735f94,Blue: The player advances by clicking or pressing continue.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,16
+line:e44358e3,Blue: You came back! That increases my trust level.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,19
+line:5e12517a,"Blue: We're good friends now. Here, take this Crystal.",/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,22
+line:c822560d,Narrator: You received the Crystal!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,30
+line:593fe99d,"Blue: Oh, you already have it. Nevermind!",/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,32
+line:cf0feeea,Ask about this place,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,39
+line:2a86298a,Blue: The Main Area is the hub. Everything connects here.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,40
+line:bcb62efd,Blue: You can reach Secondary Area directly.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,41
+line:06e72764,Blue: Tertiary Area needs the Key from Red.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,42
+line:90d72013,Say goodbye,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,46
+line:3342448d,Blue: See you around!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Blue_Dialogue,47
+line:bfa1c1a6,Green: I'm Green. I demonstrate variables and conditionals.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,60
+line:05f0c83f,Green: Let me show you how variables work.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,63
+line:93c0cf48,Green: Your current trust with me is {0}.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,67
+line:02dd70d8,Green: Now it's {0}. See how that works?,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,69
+line:94ed77af,Green: Your trust with me is currently {0}.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,73
+line:f7c3ea99,Green: Blue trust: {0},/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,74
+line:61f3edee,Green: Red trust: {0},/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,75
+line:dba2e477,Green: Purple trust: {0},/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,76
+line:4d92e300,Green: Lime trust: {0}},/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,77
+line:ee07879e,Increase trust,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,80
+line:783780e9,Green: Trust increased to {0}!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,84
+line:c2668970,Decrease trust,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,85
+line:54568e07,Green: Trust decreased to {0}.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,87
+line:c54b3197,Back to hub,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,88
+line:537b36e0,Green: Goodbye!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Green_Dialogue,89
+line:f95ed892,Red: I'm Red. I show branching dialogue with consequences.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,101
+line:6f6edfe5,Red: I have the Key to Tertiary Area.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,107
+line:d53fd67c,Red: But you'll need to earn it.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,108
+line:430fd10b,Challenge me!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,112
+line:e09ab595,"Red: Alright, a test of choices...",/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,113
+line:76aab2e2,Maybe later,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,115
+line:ccfbbb7b,Red: Come back when you're ready.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,116
+line:5acbbc0c,Red: You already have the Key. Good luck in Tertiary Area!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,121
+line:cbd6039c,Thanks!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Dialogue,122
+line:a584df5f,Red: I'll ask three questions. Get them right to earn the Key.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,131
+line:c26f2e0d,Red: Question 1 - What demonstrates basic dialogue?,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,133
+line:545f297a,Blue,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,134
+line:ee0e20e3,Red: Correct!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,135
+line:783e2794,Green,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,137
+line:dbab430a,Red: Wrong. Blue demonstrates basic dialogue.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,138
+line:4d9b447d,Purple,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,139
+line:f7ca4de4,Red: Wrong. Blue demonstrates basic dialogue.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,140
+line:61fa4a93,Red: Question 2 - What demonstrates variables?,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,142
+line:f0e7f503,Blue,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,143
+line:66d7f274,Red: Wrong. Green demonstrates variables.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,144
+line:835e3514,Green,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,145
+line:156e3263,Red: Correct!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,146
+line:af3f3bfa,Lime,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,148
+line:390f3c8d,Red: Wrong. Green demonstrates variables.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,149
+line:9a9a5813,Red: Question 3 - What demonstrates commands?,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,151
+line:0caa5f64,Red,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,152
+line:b6fb56fd,Red: Wrong. Lime demonstrates commands.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,153
+line:20cb518a,Purple,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,154
+line:b1d6ee1a,Red: Wrong. Lime demonstrates commands.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,155
+line:27e6e96d,Lime,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,156
+line:4c42ad93,Red: Correct!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,157
+line:da72aae4,Red: Perfect score! Here's the Key.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,161
+line:6023a37d,Narrator: You received the Key!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,163
+line:f613a40a,Red: Close enough. Take the Key.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,165
+line:5586c094,Narrator: You received the Key!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,167
+line:c3b6c7e3,Red: Not quite. Try again later.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Red_Challenge,169
+line:75fa7e72,Purple: I'm Purple. I demonstrate saliency - smart line selection.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,178
+line:e3ca7905,This is my first time meeting you.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,181
+line:72d7c695,Good to see you again!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,182
+line:e4e7c1e2,We're becoming good friends.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,183
+line:016e0682,You're one of my best friends now!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,184
+line:975e01f5,Purple: Watch how my greeting changes based on our relationship.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,186
+line:2d0f086c,I see you're empty-handed.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,189
+line:bb3f0f1b,Nice Crystal you have there!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,190
+line:18aa6b85,That Key will be useful.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,191
+line:8e9a6cf2,The Scroll contains wisdom.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,192
+line:34cb656b,You've collected everything!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,193
+line:a2fb621c,Tell me more about saliency,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,197
+line:33e6dd8c,Purple: Line groups use the arrow-equals syntax.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,198
+line:a5d6dafb,Purple: Yarn Spinner picks the best matching line.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,199
+line:61b84d8d,Purple: Lines with more specific conditions are preferred.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,200
+line:f7884afa,Purple: The saliency strategy in settings controls selection.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,201
+line:4dd94363,Return,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,202
+line:dbe94414,Purple: Visit me again to see my lines change!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Purple_Dialogue,203
+line:7c45ed6d,Lime: I'm Lime. I demonstrate commands and functions.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,211
+line:ea75ea1a,Lime: The wait command pauses dialogue briefly.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,215
+line:5024e383,Lime: Commands like emotion could control character expressions.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,219
+line:c614e4f4,Lime: Or camera commands for visual effects.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,222
+line:57095b64,Show me a functional example,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,224
+line:c1395c13,Lime: Here's how commands integrate with variables:,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,225
+line:24b09b73,Lime: I just used set to increase your trust.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,227
+line:b2809c04,Lime: Trust is now {0}.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,228
+line:08d1959d,Lime: High trust unlocked! Here's the Scroll.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,232
+line:9ee192ea,Narrator: You received the Scroll!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,233
+line:3d74f674,Return,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,235
+line:ab44f103,Lime: Come back to learn more!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/characters.yarn,Lime_Dialogue,236
+line:30cb4e4e,Narrator: You've entered the Secondary Area.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea,7
+line:a6fb4939,Narrator: This area demonstrates linear scene progression.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea,8
+line:37e6f6a9,Talk to Red,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea,11
+line:a1d6f1de,Explore the area,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea,13
+line:c63d008c,Return to Main Area,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea,15
+line:e4ef3d18,Narrator: You explore the Secondary Area.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea_Explore,22
+line:5ebe3481,Narrator: Step 1 - You notice the eastern path.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea_Explore,24
+line:c88e33f6,Continue,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea_Explore,25
+line:6b1b5768,Narrator: Step 2 - The path leads to a clearing.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea_Explore,26
+line:fd2b501f,Continue,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea_Explore,27
+line:477a5986,"Narrator: Step 3 - In the clearing, you find Red waiting.",/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,SecondaryArea_Explore,28
+line:d50b3f27,Narrator: You've entered the Tertiary Area.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea,38
+line:441680b7,Narrator: This area was locked until you obtained the Key.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea,39
+line:d22687c0,Talk to Purple (saliency),/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea,42
+line:37af40a0,Talk to Lime (commands),/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea,44
+line:a19f47d7,Explore the area,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea,46
+line:1bce4e4e,Return to Main Area,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea,48
+line:1f6f1540,Narrator: The Tertiary Area has hidden secrets.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea_Explore,55
+line:bcfa71de,Narrator: Your Crystal and Scroll resonate together!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea_Explore,58
+line:2aca76a9,Narrator: A hidden message appears...,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea_Explore,59
+line:909b7f30,"Narrator: ""True mastery comes from understanding all features.""",/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea_Explore,60
+line:06ab7847,Narrator: Something here responds to items you don't have yet.,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea_Explore,63
+line:97b6c7d7,Narrator: (Hint: Blue in Main Area has the Crystal),/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea_Explore,65
+line:0186c0a0,"Narrator: (Hint: Lime here has the Scroll, but needs trust)",/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,TertiaryArea_Explore,68
+line:889bce12,Narrator: Congratulations!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,78
+line:1eabc965,Narrator: You've demonstrated all major Yarn Spinner features:,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,79
+line:a4fac0fc,"Narrator: ✓ Variables (declare, set, interpolation)",/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,81
+line:32cac78b,Narrator: ✓ Conditional branching (if/elseif/else),/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,82
+line:915fa315,Narrator: ✓ Line groups (saliency selection),/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,83
+line:076fa462,"Narrator: ✓ Commands (wait, custom commands)",/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,84
+line:bd3eadfb,Narrator: ✓ Flow control (jump),/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,85
+line:2b0eaa8c,Narrator: ✓ Hub and spoke navigation,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,86
+line:ba13151c,Narrator: ✓ Linear progression,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,87
+line:2c23126b,Narrator: ✓ Conditional area access,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,88
+line:c9aad50b,Narrator: ✓ Character trust systems,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,89
+line:5f9ad27c,Narrator: ✓ Inventory management,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,90
+line:e5cbdbe5,Narrator: The Skeleton Story demonstration is complete!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,92
+line:73fbdc92,Play again,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,94
+line:d06eb80c,End,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,96
+line:465ebf7b,Narrator: Thanks for exploring!,/Users/mjake/Projects/zig-yarnspinner/yarn/demo/locations.yarn,Victory,97

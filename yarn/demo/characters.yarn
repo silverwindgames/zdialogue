@@ -1,0 +1,239 @@
+title: Blue_Dialogue
+---
+// =============================================================================
+// BLUE - Demonstrates basic dialogue and trust building
+// =============================================================================
+// This character shows: sequential dialogue, if/elseif/else, nested conditions,
+// variable modification with set, and trust-based reward unlocking.
+
+// MULTI-BRANCH CONDITIONS
+// Use if, elseif, and else to create branching dialogue.
+// Only ONE branch executes - the first one whose condition is true.
+<<if $blue_trust == 0>>
+    // First meeting - introduce the character
+    Blue: Hello! I'm Blue. I demonstrate basic dialogue patterns.
+    Blue: Each line appears one at a time.
+    Blue: The player advances by clicking or pressing continue.
+<<elseif $blue_trust == 1>>
+    // Second meeting - acknowledge the return
+    Blue: You came back! That increases my trust level.
+<<elseif $blue_trust >= 2>>
+    // High trust - give reward
+    Blue: We're good friends now. Here, take this Crystal.
+    // NESTED CONDITIONS
+    // You can put if blocks inside other if blocks.
+    <<if not $has_crystal>>
+        // SETTING VARIABLES
+        // set $var = value assigns a new value.
+        // set $var to value is an alternative syntax.
+        <<set $has_crystal = true>>
+        Narrator: You received the Crystal!
+    <<else>>
+        Blue: Oh, you already have it. Nevermind!
+    <<endif>>
+<<endif>>
+
+// OPTIONS (CHOICES)
+// Lines starting with -> are options the player can choose.
+// Indented content after -> runs when that option is selected.
+-> Ask about this place
+    Blue: The Main Area is the hub. Everything connects here.
+    Blue: You can reach Secondary Area directly.
+    Blue: Tertiary Area needs the Key from Red.
+    // INCREMENT OPERATOR
+    // set $var += 1 adds to the variable. Also works: -=, *=, /=
+    <<set $blue_trust += 1>>
+-> Say goodbye
+    Blue: See you around!
+    <<set $blue_trust += 1>>
+
+<<jump MainArea>>
+===
+title: Green_Dialogue
+---
+// =============================================================================
+// GREEN - Demonstrates variables and conditions
+// =============================================================================
+// This character shows: variable interpolation with {$var}, displaying
+// multiple variables, and arithmetic operators (+=, -=).
+
+Green: I'm Green. I demonstrate variables and conditionals.
+
+<<if $green_trust == 0>>
+    Green: Let me show you how variables work.
+    // VARIABLE INTERPOLATION
+    // Use {$variableName} inside dialogue to show the variable's value.
+    // This works in any dialogue line - the value is inserted at runtime.
+    Green: Your current trust with me is {$green_trust}.
+    <<set $green_trust += 1>>
+    Green: Now it's {$green_trust}. See how that works?
+<<else>>
+    // DISPLAYING MULTIPLE VARIABLES
+    // You can interpolate as many variables as you need in dialogue.
+    Green: Your trust with me is currently {$green_trust}.
+    Green: Blue trust: {$blue_trust}
+    Green: Red trust: {$red_trust}
+    Green: Purple trust: {$purple_trust}
+    Green: Lime trust: {$lime_trust}}
+<<endif>>
+
+-> Increase trust
+    // ARITHMETIC OPERATORS
+    // += adds, -= subtracts, *= multiplies, /= divides
+    <<set $green_trust += 1>>
+    Green: Trust increased to {$green_trust}!
+-> Decrease trust
+    <<set $green_trust -= 1>>
+    Green: Trust decreased to {$green_trust}.
+-> Back to hub
+    Green: Goodbye!
+
+<<jump MainArea>>
+===
+title: Red_Dialogue
+---
+// =============================================================================
+// RED - Demonstrates branching choices and consequences
+// =============================================================================
+// This character shows: gated content based on items, multi-choice quiz,
+// score tracking, and conditional rewards.
+
+Red: I'm Red. I show branching dialogue with consequences.
+
+// GATING CONTENT
+// Check if player has an item before showing content.
+// "not $has_key" is true when $has_key is false.
+<<if not $has_key>>
+    Red: I have the Key to Tertiary Area.
+    Red: But you'll need to earn it.
+
+    // NESTED OPTIONS
+    // Options can lead to other nodes or inline content.
+    -> Challenge me!
+        Red: Alright, a test of choices...
+        <<jump Red_Challenge>>
+    -> Maybe later
+        Red: Come back when you're ready.
+        <<jump SecondaryArea>>
+<<else>>
+    // ALTERNATIVE PATH
+    // When player already has the item, show different dialogue.
+    Red: You already have the Key. Good luck in Tertiary Area!
+    -> Thanks!
+        <<set $red_trust += 1>>
+        <<jump SecondaryArea>>
+<<endif>>
+===
+title: Red_Challenge
+---
+// BRANCHING EXAMPLE - Multiple paths with different outcomes
+
+Red: I'll ask three questions. Get them right to earn the Key.
+
+Red: Question 1 - What demonstrates basic dialogue?
+-> Blue
+    Red: Correct!
+    <<set $red_trust += 1>>
+-> Green
+    Red: Wrong. Blue demonstrates basic dialogue.
+-> Purple
+    Red: Wrong. Blue demonstrates basic dialogue.
+
+Red: Question 2 - What demonstrates variables?
+-> Blue
+    Red: Wrong. Green demonstrates variables.
+-> Green
+    Red: Correct!
+    <<set $red_trust += 1>>
+-> Lime
+    Red: Wrong. Green demonstrates variables.
+
+Red: Question 3 - What demonstrates commands?
+-> Red
+    Red: Wrong. Lime demonstrates commands.
+-> Purple
+    Red: Wrong. Lime demonstrates commands.
+-> Lime
+    Red: Correct!
+    <<set $red_trust += 1>>
+
+<<if $red_trust >= 3>>
+    Red: Perfect score! Here's the Key.
+    <<set $has_key = true>>
+    Narrator: You received the Key!
+<<elseif $red_trust >= 2>>
+    Red: Close enough. Take the Key.
+    <<set $has_key = true>>
+    Narrator: You received the Key!
+<<else>>
+    Red: Not quite. Try again later.
+<<endif>>
+
+<<jump SecondaryArea>>
+===
+title: Purple_Dialogue
+---
+// PURPLE - Demonstrates saliency and line groups
+
+Purple: I'm Purple. I demonstrate saliency - smart line selection.
+
+// Line groups pick the most appropriate line automatically
+=> This is my first time meeting you. <<if $purple_trust == 0>>
+=> Good to see you again! <<if $purple_trust == 1>>
+=> We're becoming good friends. <<if $purple_trust == 2>>
+=> You're one of my best friends now! <<if $purple_trust >= 3>>
+
+Purple: Watch how my greeting changes based on our relationship.
+
+// Another line group based on inventory
+=> I see you're empty-handed. <<if not $has_crystal and not $has_key and not $has_scroll>>
+=> Nice Crystal you have there! <<if $has_crystal>>
+=> That Key will be useful. <<if $has_key>>
+=> The Scroll contains wisdom. <<if $has_scroll>>
+=> You've collected everything! <<if $has_crystal and $has_key and $has_scroll>>
+
+<<set $purple_trust += 1>>
+
+-> Tell me more about saliency
+    Purple: Line groups use the arrow-equals syntax.
+    Purple: Yarn Spinner picks the best matching line.
+    Purple: Lines with more specific conditions are preferred.
+    Purple: The saliency strategy in settings controls selection.
+-> Return
+    Purple: Visit me again to see my lines change!
+
+<<jump TertiaryArea>>
+===
+title: Lime_Dialogue
+---
+// LIME - Demonstrates commands and custom functions
+
+Lime: I'm Lime. I demonstrate commands and functions.
+
+// Commands send instructions to the game engine
+<<wait 0.5>>
+Lime: The wait command pauses dialogue briefly.
+
+// Custom commands (these would be handled by the game)
+<<emotion Lime happy>>
+Lime: Commands like emotion could control character expressions.
+
+<<camera shake>>
+Lime: Or camera commands for visual effects.
+
+-> Show me a functional example
+    Lime: Here's how commands integrate with variables:
+    <<set $lime_trust += 1>>
+    Lime: I just used set to increase your trust.
+    Lime: Trust is now {$lime_trust}.
+
+    <<if $lime_trust >= 2>>
+        <<set $has_scroll = true>>
+        Lime: High trust unlocked! Here's the Scroll.
+        Narrator: You received the Scroll!
+    <<endif>>
+-> Return
+    Lime: Come back to learn more!
+
+<<jump TertiaryArea>>
+===

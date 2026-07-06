@@ -1,0 +1,98 @@
+title: SecondaryArea
+---
+// SECONDARY AREA - Demonstrates linear progression
+
+<<set $visited_secondary = true>>
+
+Narrator: You've entered the Secondary Area.
+Narrator: This area demonstrates linear scene progression.
+
+// Characters available here
+-> Talk to Red
+    <<jump Red_Dialogue>>
+-> Explore the area
+    <<jump SecondaryArea_Explore>>
+-> Return to Main Area
+    <<jump MainArea>>
+===
+title: SecondaryArea_Explore
+---
+// LINEAR PROGRESSION EXAMPLE
+
+Narrator: You explore the Secondary Area.
+
+Narrator: Step 1 - You notice the eastern path.
+-> Continue
+    Narrator: Step 2 - The path leads to a clearing.
+-> Continue
+    Narrator: Step 3 - In the clearing, you find Red waiting.
+
+<<jump SecondaryArea>>
+===
+title: TertiaryArea
+---
+// TERTIARY AREA - Demonstrates conditional access
+
+<<set $visited_tertiary = true>>
+
+Narrator: You've entered the Tertiary Area.
+Narrator: This area was locked until you obtained the Key.
+
+// Characters available here
+-> Talk to Purple (saliency)
+    <<jump Purple_Dialogue>>
+-> Talk to Lime (commands)
+    <<jump Lime_Dialogue>>
+-> Explore the area
+    <<jump TertiaryArea_Explore>>
+-> Return to Main Area
+    <<jump MainArea>>
+===
+title: TertiaryArea_Explore
+---
+// EXPLORATION WITH CONDITIONS
+
+Narrator: The Tertiary Area has hidden secrets.
+
+<<if $has_crystal and $has_scroll>>
+    Narrator: Your Crystal and Scroll resonate together!
+    Narrator: A hidden message appears...
+    Narrator: "True mastery comes from understanding all features."
+    <<jump Victory>>
+<<else>>
+    Narrator: Something here responds to items you don't have yet.
+    <<if not $has_crystal>>
+        Narrator: (Hint: Blue in Main Area has the Crystal)
+    <<endif>>
+    <<if not $has_scroll>>
+        Narrator: (Hint: Lime here has the Scroll, but needs trust)
+    <<endif>>
+<<endif>>
+
+<<jump TertiaryArea>>
+===
+title: Victory
+---
+// VICTORY/ENDING NODE
+
+Narrator: Congratulations!
+Narrator: You've demonstrated all major Yarn Spinner features:
+
+Narrator: ✓ Variables (declare, set, interpolation)
+Narrator: ✓ Conditional branching (if/elseif/else)
+Narrator: ✓ Line groups (saliency selection)
+Narrator: ✓ Commands (wait, custom commands)
+Narrator: ✓ Flow control (jump)
+Narrator: ✓ Hub and spoke navigation
+Narrator: ✓ Linear progression
+Narrator: ✓ Conditional area access
+Narrator: ✓ Character trust systems
+Narrator: ✓ Inventory management
+
+Narrator: The Skeleton Story demonstration is complete!
+
+-> Play again
+    <<jump Start>>
+-> End
+    Narrator: Thanks for exploring!
+===
