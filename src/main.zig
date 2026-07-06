@@ -4,6 +4,17 @@ const Io = std.Io;
 const zdialogue = @import("zdialogue");
 const Yarn = zdialogue.Yarn;
 
+var lines: std.StringHashMap(zdialogue.Dialogue.Line) = undefined;
+
+fn lineHandler(line_id: []const u8) void {
+    const line_data = lines.get(line_id) orelse {
+        std.log.err("Line ID not found: {s}", .{line_id});
+        return;
+    };
+
+    std.log.info("[LineHandler] {s}", .{line_data.text});
+}
+
 pub fn main(init: std.process.Init) !void {
     // Prints to stderr, unbuffered, ignoring potential errors.
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
@@ -36,6 +47,11 @@ pub fn main(init: std.process.Init) !void {
         return err;
     };
 
+    lines = zdialogue.Dialogue.parseDialogueFromCsv(io, arena, "yarn/demo/Project-Lines.csv") catch |err| {
+        std.log.err("Failed to parse dialogue CSV: {any}", .{err});
+        return err;
+    };
+
     const node_pair = program.nodes.items[0];
     std.log.info("Node key: {s}", .{node_pair.key});
 
@@ -50,8 +66,10 @@ pub fn main(init: std.process.Init) !void {
 
     std.log.info("[!] Program started", .{});
 
-    var vm = zdialogue.VirtualMachine.init(node.instructions.items);
-    try vm.run(.{ .tracing = true });
+    var vm = zdialogue.VirtualMachine.init(node.instructions.items, .{
+        .lineHandler = lineHandler,
+    });
+    try vm.run(.{ .tracing = false });
 
     std.log.info("[!] Program ended", .{});
 }

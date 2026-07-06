@@ -3,7 +3,8 @@ const std = @import("std");
 const Io = std.Io;
 
 pub const Yarn = @import("proto/Yarn.pb.zig");
-pub const VirtualMachine = @import("VirtualMachine.zig");
+pub const VirtualMachine = @import("runtime/vm.zig");
+pub const Dialogue = @import("runtime/dialogue.zig");
 
 pub fn parseProtobuf(path: []const u8, io: std.Io, allocator: std.mem.Allocator) !Yarn.Program {
     const file = try std.Io.Dir.cwd().openFile(io, path, .{});

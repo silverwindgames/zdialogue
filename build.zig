@@ -120,6 +120,9 @@ pub fn build(b: *std.Build) void {
 
     gen_proto.dependOn(&protoc_step.step);
 
+    const csvzero = b.dependency("csvzero", .{});
+    mod.addImport("csvzero", csvzero.module("csvzero"));
+
     // This creates a top level step. Top level steps have a name and can be
     // invoked by name when running `zig build` (e.g. `zig build run`).
     // This will evaluate the `run` step rather than the default step.

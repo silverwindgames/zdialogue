@@ -36,6 +36,10 @@
             .url = "git+https://github.com/Arwalk/zig-protobuf?ref=master#2b7103e1f71a02cb19bb464820ab6fa7376e5a17",
             .hash = "protobuf-5.0.0-0e82apH3KQCe2L15XA_xb4QX_VuFH8tuRiQudst0DwjP",
         },
+        .csvzero = .{
+            .url = "git+https://github.com/peymanmortazavi/csv-zero.git#8f90ee1e9316dbf399fe6a10627f02441ef94c7a",
+            .hash = "csvzero-0.2.0-YQXXvKbEAADM8gtEK4PuCjFnAMzT_x-O0cfI7ZRJc1Qh",
+        },
     },
     .paths = .{
         "build.zig",
