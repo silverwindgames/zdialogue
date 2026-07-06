@@ -66,7 +66,7 @@ pub fn main(init: std.process.Init) !void {
 
     std.log.info("[!] Program started", .{});
 
-    var vm = zdialogue.VirtualMachine.init(node.instructions.items, .{
+    var vm = zdialogue.VirtualMachine.init(&program, .{
         .lineHandler = lineHandler,
     });
     try vm.run(.{ .tracing = false });
@@ -111,4 +111,19 @@ fn testOne(context: void, smith: *std.testing.Smith) !void {
             );
         },
     };
+}
+
+test "Commands.yarn" {
+    const commands_yarn = @embedFile("CompiledTestCases/Commands.yarnc");
+    const commands_testplan = @embedFile("CompiledTestCases/Commands-Lines.csv");
+    _ = commands_yarn;
+    _ = commands_testplan;
+
+    // TODO:
+    //  - Load the protobuf and CSV into memory
+    //  - Run the VM with the loaded data
+    //  - Somehow add stub test methods which can verify against the testplan
+    //  - Use this as an integration testing suite??
+
+    std.debug.assert(1 == 1);
 }

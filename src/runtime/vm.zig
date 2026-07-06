@@ -37,17 +37,19 @@ pub fn defaultLineHandler(lineID: []const u8) void {
 }
 
 state: ExecutionState,
-program: []Yarn.Instruction,
+program: *const Yarn.Program,
+node: *const Yarn.Node,
 pc: usize,
 lineHandler: LineHandler,
 
 const Self = @This();
 
-pub fn init(program: []Yarn.Instruction, callbacks: Callbacks) Self {
-    std.debug.assert(program.len > 0);
+pub fn init(program: *const Yarn.Program, callbacks: Callbacks) Self {
+    std.debug.assert(program.nodes.items.len > 0);
     return Self{
         .state = .running,
         .program = program,
+        .node = &program.nodes.items[0].value.?,
         .pc = 0,
         .lineHandler = if (callbacks.lineHandler) |cb| cb else defaultLineHandler,
     };
@@ -63,7 +65,7 @@ pub const RunOpts = struct {
 
 pub fn run(self: *Self, opts: RunOpts) !void {
     while (true) {
-        const instruction = self.program[self.pc];
+        const instruction = self.node.instructions.items[self.pc];
 
         if (opts.tracing) {
             traceInstruction(instruction);
@@ -72,6 +74,21 @@ pub fn run(self: *Self, opts: RunOpts) !void {
         switch (instruction.InstructionType.?) {
             .runLine => |runLine| {
                 self.lineHandler(runLine.lineID);
+            },
+            .showOptions => |showOptions| {
+                _ = showOptions;
+                break;
+            },
+            .runNode => |runNode| {
+                // TODO: Detours and branching and stuff
+                const nodeName = runNode.nodeName;
+                for (self.program.nodes.items) |node_pair| {
+                    if (std.mem.eql(u8, node_pair.key, nodeName)) {
+                        self.node = &node_pair.value.?;
+                        self.pc = 0;
+                        continue;
+                    }
+                }
             },
             .@"return" => return,
             else => |inst| {
