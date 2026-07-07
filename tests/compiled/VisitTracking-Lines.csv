@@ -1,0 +1,18 @@
+id,text,file,node,lineNumber
+line:52934227,beginning,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,3
+line:c4a34550,entered End,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,14
+line:7ef24cc9,did we visit ImplicitTrack? {0}!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,16
+line:e8c24bbe,did we visit NoTrack? {0}!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,17
+line:4b572f20,did we visit Track? {0}!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,18
+line:dd672857,did we visit NodeGroupImplicitTrack? {0}!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,19
+line:673621ce,did we visit NodeGroupNoTrack? {0}!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,20
+line:f10626b9,did we visit NodeGroupTrack? {0}!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,21
+line:601b9929,did we visit NodeGroupWithSubtitle.ABC123? {0}!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,22
+line:f62b9e5e,done,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Start,24
+line:e99782e2,entered ImplicitTrack,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,ImplicitTrack,29
+line:d7437b76,entered NoTrack,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,NoTrack,35
+line:23f4ad6a,entered Track,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,Track,41
+line:acb19523,entered NodeGroupImplicitTrack,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,NodeGroupImplicitTrack,47
+line:76b53c90,entered NodeGroupTrack,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,NodeGroupTrack,53
+line:fad98cb3,entered NodeGroupNoTrack,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,NodeGroupNoTrack,59
+line:f878e17f,entered NodeGroupWithSubtitle.ABC123,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitTracking.yarn,NodeGroupWithSubtitle,65

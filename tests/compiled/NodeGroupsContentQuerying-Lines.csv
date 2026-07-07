@@ -1,0 +1,10 @@
+id,text,file,node,lineNumber
+line:9ab8a0a8,Content for NodeGroupConditional available: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,Start,3
+line:0c88a7df,Content for NodeGroupAlways available: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,Start,4
+line:b6d9ae46,Content for NotANodeGroup available: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,Start,5
+line:20e9a931,Content for NodeGroupConditional available: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,Start,9
+line:837ccdaf,Content for NodeGroupAlways available: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,Start,10
+line:154ccad8,Content for NotANodeGroup available: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,Start,11
+line:2bf9e130,conditional content,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,NodeGroupConditional,16
+line:522e2c49,always-available content,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,NodeGroupAlways,21
+line:39051ece,"this is not a node group but will always ""have content available""",/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsContentQuerying.yarn,NotANodeGroup,25

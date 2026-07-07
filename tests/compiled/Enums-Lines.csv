@@ -1,0 +1,13 @@
+id,text,file,node,lineNumber
+line:0ed417ac,I like apples!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,23
+line:98e410db,It's an error if you see this!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,25
+line:22b51942,It's an error if you see this!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,27
+line:b4851e35,Oranges are okay in a pinch!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,31
+line:17107aab,It's an error if you see this!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,33
+line:81207ddc,It's an error if you see this!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,42
+line:3b717445,It's an error if you see this!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,44
+line:ad417332,I like oranges now!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,46
+line:3c5ccca2,ok 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,76
+line:aa6ccbd5,error,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,78
+line:b3d4d40a,ok 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,82
+line:25e4d37d,error,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Enums.yarn,Start,84

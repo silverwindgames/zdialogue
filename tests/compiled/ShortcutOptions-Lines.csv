@@ -1,0 +1,50 @@
+id,text,file,node,lineNumber
+line:76e988da,Option 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,10
+line:e0d98fad,This line should appear.,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,12
+line:5a888634,Sub Option 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,13
+line:ccb88143,This line should also appear.,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,15
+line:6f2de5dd,Sub Option 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,17
+line:f91de2aa,Sub Option 3,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,18
+line:434ceb33,Option 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,19
+line:d57cec44,This line should not appear.,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,20
+line:446153d4,Option 3,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,21
+line:d25154a3,This line should not appear.,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,22
+line:80b27c54,Bea: line text,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,26
+line:16827b23,option1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,27
+line:acd372ba,option2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,28
+line:3ae375cd,Bea: line text2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,29
+line:99761153,Bea: indented line text,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,32
+line:0f461624,indented option1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,33
+line:b5171fbd,indented option2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,34
+line:232718ca,Bea: indented line text2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,35
+line:b23aa75a,Bea: line text,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,38
+line:240aa02d,indented option1 following unindented line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,39
+line:43e1517f,indented option2 following unindented line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,40
+line:d5d15608,option2.1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,41
+line:6f805f91,option2.2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,42
+line:f9b058e6,option2.3,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,43
+line:5a253c78,option2.4,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,44
+line:cc153b0f,A,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,47
+line:76443296,B,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,48
+line:0e8a7ce,Option A,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,53
+line:0405c66,Option B,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,54
+line:0e8a7cd,Option A,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,57
+line:0405c67,Option B,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,58
+line:94e04d11,Option1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,62
+line:2eb14488,Option2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,64
+line:b88143ff,Option A,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,67
+line:1b142761,Option B,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,68
+line:8d242016,Line after fallthrough option block 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,69
+line:3775298f,Option A,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,71
+line:a1452ef8,Option A1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,72
+line:30589168,Option A2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,73
+line:a668961f,Line inside Option A fallthrough block 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,74
+line:c5460b29,Option B,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,75
+line:53760c5e,Line after fallthrough option block 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,76
+line:e92705c7,Option A,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,78
+line:7f1702b0,Option A1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,79
+line:dc82662e,Option A2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,80
+line:4ab26159,Option B,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,81
+line:f0e368c0,Option B1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,82
+line:66d36fb7,Option B2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,83
+line:f7ced027,Line after fallthrough option block 3,/Users/mjake/Projects/zig-yarnspinner/tests/cases/ShortcutOptions.yarn,Start,84

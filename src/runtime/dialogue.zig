@@ -14,6 +14,13 @@ pub const Line = struct {
     line_number: u32,
 };
 
+pub const Metadata = struct {
+    id: []const u8,
+    node: []const u8,
+    line_number: u32,
+    tags: std.ArrayList([]const u8),
+};
+
 /// Caller is responsible for freeing the returned StringHashMap when done with it.
 pub fn parseDialogueFromCsv(io: std.Io, allocator: std.mem.Allocator, path: []const u8) !std.StringHashMap(Line) {
     var csv_file = try std.Io.Dir.cwd().openFile(io, path, .{});

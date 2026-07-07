@@ -1,0 +1,6 @@
+id,text,file,node,lineNumber
+line:f1560975,entered start,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitCount.yarn,Start,3
+line:67660e02,seconds visited count is {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitCount.yarn,Start,4
+line:a7fff8c0,second visited {0} times,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitCount.yarn,second,11
+line:f872cfdc,entered third,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitCount.yarn,third,20
+line:5be7ab42,seconds was visited a total of {0} times,/Users/mjake/Projects/zig-yarnspinner/tests/cases/VisitCount.yarn,third,21

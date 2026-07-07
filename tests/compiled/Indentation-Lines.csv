@@ -1,0 +1,16 @@
+id,text,file,node,lineNumber
+line:630e060b,zero indent if with equal line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,7
+line:f53e017c,zero indent if with one indent line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,12
+line:4f6f08e5,zero indent if with two indent line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,17
+line:d95f0f92,one indent if with equal indent line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,22
+line:7aca6b0c,zero indent line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,26
+line:ecfa6c7b,one indent if with two indent line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,28
+line:56ab65e2,zero indent line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,32
+line:c09b6295,one indent line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,33
+line:5186dd05,one indent if with zero indent line and endif,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,37
+line:c7b6da72,zero indent if with one indent line and endif,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,42
+line:8cd87039,zero indent if and line with one indent,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,47
+line:1ae8774e,one indent if and endif with zero indent line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,52
+line:a0b97ed7,option with subline,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,55
+line:368979a0,subline,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,56
+line:951c1d3e,option below blank line,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Indentation.yarn,Start,58

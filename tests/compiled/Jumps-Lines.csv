@@ -1,0 +1,6 @@
+id,text,file,node,lineNumber
+line:7b6eab1e,Start,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Jumps.yarn,Start,3
+line:ed5eac69,Error! This line should not be seen.,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Jumps.yarn,Start,6
+line:5d28381c,NodeNameDestination,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Jumps.yarn,NodeNameDestination,10
+line:7a820079,NodeNameExpression,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Jumps.yarn,NodeNameConstantExpression,16
+line:b9d639bf,NodeNameVariableExpression,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Jumps.yarn,NodeNameVariableExpression,23

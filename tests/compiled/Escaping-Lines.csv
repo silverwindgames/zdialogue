@@ -1,0 +1,32 @@
+id,text,file,node,lineNumber
+line:70e7df48,Here's a line with a hashtag,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,3
+line:e6d7d83f,Here's a line with an escaped hashtag #hashtag,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,4
+line:5c86d1a6,Here's a line with an expression {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,6
+line:cab6d6d1,Here's a line with an escaped expression {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,7
+line:6923b24f,Here's a line with an escaped command <<foo>>,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,12
+line:ff13b538,Here's a line with a comment,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,14
+line:4542bca1,Here's a line with an escaped comment // wow,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,15
+line:d372bbd6,Here's a line with an escaped backslash \,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,17
+line:426f0446,Here's some TMP-style styling with a color code: <color=#fff>wow</color>,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,19
+line:d45f0331,Here's a url: http://github.com/YarnSpinnerTool,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,21
+line:bb408dbd,Here's some markup: [a]hello[/a],/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,25
+line:2d708aca,Here's some escaped markup: \[a\]hello\[/a\],/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,26
+line:97218353,Here's an option with a hashtag,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,28
+line:01118424,Here's an option with an escaped hashtag #hashtag,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,29
+line:a284e0ba,Here's an option with an expression {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,30
+line:34b4e7cd,Here's an option with an escaped expression {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,31
+line:8ee5ee54,Here's an option with a condition,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,32
+line:18d5e923,Here's an option with an escaped condition <<if true>>,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,33
+line:89c856b3,Here's an option with a comment,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,34
+line:1ff851c4,Here's an option with an escaped comment // wow,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,35
+line:7813a096,Here's an option with an escaped backslash \,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,36
+line:ee23a7e1,Here's some TMP-style styling with a color code: <color=#fff>wow</color>,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,37
+line:5472ae78,Here's a url: http://github.com/YarnSpinnerTool,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,38
+line:c242a90f,Here's some markup: [a]hello[/a],/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,39
+line:61d7cd91,Here's some escaped markup: \[a\]hello\[/a\],/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,40
+line:f7e7cae6,<<escaped command>>,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,43
+line:4db6c37f,{0} escaped line with interpolation,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,44
+line:db86c408,// escaped comment,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,45
+line:4a9b7b98,\[a]escaped markup\[/a],/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,46
+line:dcab7cef,Character: Here is a line with a character,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,48
+line:3922bb8f,Character\: Here is a line without a character,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Escaping.yarn,Start,49

@@ -1,0 +1,17 @@
+id,text,file,node,lineNumber
+line:7148e7f5,"Select: [select value={0} male=""male"" female=""female"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,11
+line:e778e082,"Select: [select value={0} male=""male"" female=""female"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,14
+line:5d29e91b,"Select: [select value={0} male=""male"" female=""female"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,17
+line:cb19ee6c,"Plural: [plural value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,21
+line:688c8af2,"Plural: [plural value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,24
+line:febc8d85,"Plural: [plural value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,27
+line:44ed841c,"Plural: [plural value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,30
+line:d2dd836b,"Ordinal: [ordinal value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,34
+line:43c03cfb,"Ordinal: [ordinal value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,37
+line:d5f03b8c,"Ordinal: [ordinal value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,40
+line:824837ca,"Ordinal: [ordinal value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,43
+line:147830bd,"[select value={0} male=""male\: %"" female=""female\: %"" other=""other\: %""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,50
+line:ae293924,"Mae: Wow, I came [ordinal value={0} one=""%st"" two=""%nd"" few=""%rd"" other=""%th""/]!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,53
+line:38193e53,"[select value={0} male=""male"" female=""female"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,57
+line:9b8c5acd,"[plural value={0} one=""one"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,58
+line:0dbc5dba,"[ordinal value={0} one=""one"" two=""two"" few=""few"" many=""many"" other=""other""/]",/Users/mjake/Projects/zig-yarnspinner/tests/cases/FormatFunctions.yarn,Start,59

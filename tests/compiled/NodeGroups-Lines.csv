@@ -1,0 +1,15 @@
+id,text,file,node,lineNumber
+line:f21448ea,Start of test,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,TestCaseDetours,19
+line:64244f9d,Returned from detoured node group 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,TestCaseDetours,21
+line:de754604,Returned from detoured node group 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,TestCaseDetours,23
+line:9832f854,Node group option 1 (A),/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,NodeGroup,29
+line:3ba79cca,Node group option 2 (always),/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,NodeGroup,34
+line:ad979bbd,Node group option 3 (not A),/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,NodeGroup,39
+line:17c69224,Node group option 4 (B),/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,NodeGroup,44
+line:81f69553,Node group option 5 (once),/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,NodeGroup,49
+line:10eb2ac3,Node group option 6 (once if B),/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,NodeGroup,54
+line:997ebeac,Error: Node should not run,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,UnRunnableNodegroup,60
+line:b7c07db5,Error: Node should not run,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,UnRunnableNodegroup,66
+line:f4340f8b,Detour test 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,DetourNode,72
+line:4e650612,Detour test 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,DetourNode,78
+line:c2edf749,TestCaseFunctionConditions,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroups.yarn,TestCaseFunctionConditions,83

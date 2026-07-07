@@ -1,0 +1,12 @@
+id,text,file,node,lineNumber
+line:2d5ba488,Number: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,11
+line:bb6ba3ff,Expression: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,12
+line:013aaa66,String: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,13
+line:970aad11,Bool: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,14
+line:349fc98f,Variable: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,15
+line:a2afcef8,{0} is great!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,18
+line:18fec761,Option Number: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,21
+line:8ecec016,Option Expression: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,22
+line:1fd37f86,Option String: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,23
+line:89e378f1,Option Bool: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,24
+line:4e1697a8,Option Variable: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/InlineExpressions.yarn,Start,25

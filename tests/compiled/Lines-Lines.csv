@@ -1,0 +1,7 @@
+id,text,file,node,lineNumber
+line:2601e499,This is a line of dialogue.,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Lines.yarn,Start,5
+line:b031e3ee,Mae: <shake=.01>HA HA HA HA HA NO I'M FINE.</shake>,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Lines.yarn,Start,7
+line:0a60ea77,Mae: Testing comments after lines,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Lines.yarn,Start,10
+line:9c50ed00,Mae: Testing comments after hashtags,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Lines.yarn,Start,11
+line:3fc5899e,Mae: Testing comments after line conditions,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Lines.yarn,Start,12
+line:a9f58ee9,Mae: Testing comments after hashtags with no whitespace,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Lines.yarn,Start,13

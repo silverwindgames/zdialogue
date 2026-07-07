@@ -5,7 +5,10 @@
 const std = @import("std");
 const Yarn = @import("../proto/Yarn.pb.zig");
 
-pub const LineHandler = *const fn (lineID: []const u8) void;
+const MAX_OPTIONS = 12;
+
+pub const LineHandler = *const fn (context: ?*anyopaque, lineID: []const u8) void;
+pub const OptionHandler = *const fn (context: ?*anyopaque, options: []Option) void;
 
 const ExecutionState = enum {
     /// The VirtualMachine is not running a node.
@@ -28,19 +31,40 @@ const ExecutionState = enum {
     running,
 };
 
-const Callbacks = struct {
-    lineHandler: ?LineHandler,
+pub const Option = struct {
+    index: usize,
+    line_id: []const u8,
+    destination: i32,
+    enabled: bool,
 };
 
-pub fn defaultLineHandler(lineID: []const u8) void {
-    std.log.info("[LineHandler] {s}", .{lineID});
+pub const Callbacks = struct {
+    context: ?*anyopaque = null,
+    line_handler: ?LineHandler = null,
+    option_handler: ?OptionHandler = null,
+};
+
+pub fn defaultLineHandler(_: ?*anyopaque, lineID: []const u8) void {
+    std.log.info("[Default Line Handler] {s}", .{lineID});
+}
+
+pub fn defaultOptionHandler(_: ?*anyopaque, options: []Option) void {
+    for (options) |opt| {
+        std.log.info("[Default Option Handler] {s} -> {d} (enabled: {})", .{ opt.line_id, opt.destination, opt.enabled });
+    }
 }
 
 state: ExecutionState,
 program: *const Yarn.Program,
 node: *const Yarn.Node,
 pc: usize,
-lineHandler: LineHandler,
+
+options: [MAX_OPTIONS]Option,
+num_options: usize,
+
+context: ?*anyopaque,
+line_handler: LineHandler,
+option_handler: OptionHandler,
 
 const Self = @This();
 
@@ -51,7 +75,11 @@ pub fn init(program: *const Yarn.Program, callbacks: Callbacks) Self {
         .program = program,
         .node = &program.nodes.items[0].value.?,
         .pc = 0,
-        .lineHandler = if (callbacks.lineHandler) |cb| cb else defaultLineHandler,
+        .options = undefined,
+        .num_options = 0,
+        .context = callbacks.context,
+        .line_handler = if (callbacks.line_handler) |cb| cb else defaultLineHandler,
+        .option_handler = if (callbacks.option_handler) |cb| cb else defaultOptionHandler,
     };
 }
 
@@ -73,11 +101,28 @@ pub fn run(self: *Self, opts: RunOpts) !void {
 
         switch (instruction.InstructionType.?) {
             .runLine => |runLine| {
-                self.lineHandler(runLine.lineID);
+                self.line_handler(self.context, runLine.lineID);
             },
-            .showOptions => |showOptions| {
-                _ = showOptions;
-                break;
+            .addOption => |addOption| {
+                if (self.num_options >= MAX_OPTIONS) {
+                    std.log.err("Maximum number of options reached, ignoring option: {s}", .{addOption.lineID});
+                    break;
+                }
+
+                self.options[self.num_options] = Option{
+                    .index = self.num_options,
+                    .line_id = addOption.lineID,
+                    .destination = addOption.destination,
+                    .enabled = true, // TODO: Condition stuff
+                };
+
+                self.num_options += 1;
+            },
+            .showOptions => {
+                self.option_handler(self.context, self.options[0..self.num_options]);
+                self.num_options = 0;
+                self.state = .waitingOnOptionSelection;
+                return;
             },
             .runNode => |runNode| {
                 // TODO: Detours and branching and stuff
@@ -96,6 +141,6 @@ pub fn run(self: *Self, opts: RunOpts) !void {
             },
         }
 
-        self.pc = self.pc + 1;
+        self.pc += 1;
     }
 }

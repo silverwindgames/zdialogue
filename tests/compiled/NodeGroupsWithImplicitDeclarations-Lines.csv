@@ -1,0 +1,6 @@
+id,text,file,node,lineNumber
+line:569fc278,"Guard: Halt , traveller!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsWithImplicitDeclarations.yarn,Start,5
+line:c0afc50f,"Player: Why, hello there!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsWithImplicitDeclarations.yarn,Start,6
+line:7afecc96,"Guard: Ah, my friend! You may pass.",/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsWithImplicitDeclarations.yarn,Start,7
+line:eccecbe1,"Guard: Halt, scum!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsWithImplicitDeclarations.yarn,Start,14
+line:4f5baf7f,Guard: None shall pass this point!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupsWithImplicitDeclarations.yarn,Start,15

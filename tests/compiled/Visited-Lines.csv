@@ -1,0 +1,4 @@
+id,text,file,node,lineNumber
+line:db45bae5,entered start,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Visited.yarn,Start,3
+line:4d75bd92,we have visited Start before,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Visited.yarn,Start,5
+line:f724b40b,we have not visited Start,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Visited.yarn,Start,7

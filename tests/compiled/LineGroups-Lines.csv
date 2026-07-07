@@ -1,0 +1,22 @@
+id,text,file,node,lineNumber
+line:bdf92ac8,"Baker: Hey there, friend! Made some fresh pies for you!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,11
+line:2bc92dbf,"Baker: Hey there! Fresh pies, right out of the oven!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,12
+line:91982426,Baker: Want another?,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,17
+line:07a82351,Baker: How about another pie?,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,18
+line:a43d47cf,Baker: Another pie?,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,19
+line:320d40b8,Baker: Another pie for my best customer?,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,21
+line:885c4921,Baker: What d'ya say?,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,23
+line:1e6c4e56,Baker: How about it?,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,24
+line:8f71f1c6,Baker: Want one?,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,25
+line:1941f6b1,Buy Pie,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,27
+line:a80bd858,Baker: Thank you kindly!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,28
+line:3e3bdf2f,Baker: Pleasure doin' business with you!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,29
+line:846ad6b6,Baker: Enjoy!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,30
+line:125ad1c1,Don't Buy Pie,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,32
+line:b1cfb55f,"Baker: Aw, that's a shame!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,33
+line:27ffb228,"Baker: Dang, no sale today!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,34
+line:9daebbb1,"Baker: Come back another time, then!",/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,Start,35
+line:57d2d9ee,Baker: Hey there!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,BakerSeesPlayer,40
+line:c6cf667e,Baker: Fresh pies!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,BakerSeesPlayer,41
+line:50ff6109,Baker: Fresh and hot pies!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,BakerSeesPlayer,42
+line:3714905b,Baker: Popular pies!,/Users/mjake/Projects/zig-yarnspinner/tests/cases/LineGroups.yarn,BakerSeesPlayer,43

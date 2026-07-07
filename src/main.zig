@@ -6,13 +6,24 @@ const Yarn = zdialogue.Yarn;
 
 var lines: std.StringHashMap(zdialogue.Dialogue.Line) = undefined;
 
-fn lineHandler(line_id: []const u8) void {
+fn lineHandler(_: ?*anyopaque, line_id: []const u8) void {
     const line_data = lines.get(line_id) orelse {
         std.log.err("Line ID not found: {s}", .{line_id});
         return;
     };
 
     std.log.info("[LineHandler] {s}", .{line_data.text});
+}
+
+fn optionHandler(_: ?*anyopaque, options: []zdialogue.Option) void {
+    for (options) |opt| {
+        const line_data = lines.get(opt.line_id) orelse {
+            std.log.err("Line ID not found: {s}", .{opt.line_id});
+            return;
+        };
+
+        std.log.info("[OptionHandler] {d}. {s}", .{ opt.index, line_data.text });
+    }
 }
 
 pub fn main(init: std.process.Init) !void {
@@ -42,32 +53,21 @@ pub fn main(init: std.process.Init) !void {
 
     try stdout_writer.flush(); // Don't forget to flush!
 
-    const program: Yarn.Program = zdialogue.parseProtobuf("yarn/demo/Project.yarnc", io, arena) catch |err| {
+    const program: Yarn.Program = zdialogue.parseProtobuf("demo/Project.yarnc", io, arena) catch |err| {
         std.log.err("Failed to parse protobuf: {any}", .{err});
         return err;
     };
 
-    lines = zdialogue.Dialogue.parseDialogueFromCsv(io, arena, "yarn/demo/Project-Lines.csv") catch |err| {
+    lines = zdialogue.Dialogue.parseDialogueFromCsv(io, arena, "demo/Project-Lines.csv") catch |err| {
         std.log.err("Failed to parse dialogue CSV: {any}", .{err});
         return err;
     };
 
-    const node_pair = program.nodes.items[0];
-    std.log.info("Node key: {s}", .{node_pair.key});
-
-    const node = node_pair.value.?;
-    for (node.headers.items) |header| {
-        std.log.info("Header: {s}={s}", .{ header.key, header.value });
-    }
-
-    // for (node.instructions.items) |instruction| {
-    //     std.log.info("Instruction: {any}", .{instruction.InstructionType.?});
-    // }
-
     std.log.info("[!] Program started", .{});
 
     var vm = zdialogue.VirtualMachine.init(&program, .{
-        .lineHandler = lineHandler,
+        .line_handler = lineHandler,
+        .option_handler = optionHandler,
     });
     try vm.run(.{ .tracing = false });
 

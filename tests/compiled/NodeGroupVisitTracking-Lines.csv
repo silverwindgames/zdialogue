@@ -1,0 +1,10 @@
+id,text,file,node,lineNumber
+line:907b7d68,Visited: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,Start,3
+line:064b7a1f,Visit Count: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,Start,4
+line:bc1a7386,Visited: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,Start,6
+line:2a2a74f1,Visit Count: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,Start,7
+line:89bf106f,Visited: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,Start,9
+line:1f8f1718,Visit Count: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,Start,10
+line:a5de1e81,Visited: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,Start,12
+line:33ee19f6,Visit Count: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,Start,13
+line:a4df9b9d,I'm a node group,/Users/mjake/Projects/zig-yarnspinner/tests/cases/NodeGroupVisitTracking.yarn,NodeGroup,18

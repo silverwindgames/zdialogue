@@ -5,8 +5,10 @@ const Io = std.Io;
 pub const Yarn = @import("proto/Yarn.pb.zig");
 pub const VirtualMachine = @import("runtime/vm.zig");
 pub const Dialogue = @import("runtime/dialogue.zig");
+pub const Option = VirtualMachine.Option;
 
 pub fn parseProtobuf(path: []const u8, io: std.Io, allocator: std.mem.Allocator) !Yarn.Program {
+    std.log.debug("Parsing protobuf file: {s}", .{path});
     const file = try std.Io.Dir.cwd().openFile(io, path, .{});
     defer file.close(io);
 

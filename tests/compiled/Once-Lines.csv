@@ -1,0 +1,16 @@
+id,text,file,node,lineNumber
+line:371e5fe9,This content is only seen once.,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,4
+line:a12e589e,This content is seen on all other occasions.,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,6
+line:1b7f5107,"This content is only seen once, and only if $conditionA is true.",/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,10
+line:8d4f5670,Option 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,13
+line:2eda32ee,Option 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,14
+line:b8ea3599,Option 3,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,15
+line:02bb3c00,Option 4,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,16
+line:948b3b77,Item 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,18
+line:059684e7,Item 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,19
+line:93a68390,Item 3,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,20
+line:71149455,Item 4,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,21
+line:e7249322,Line 1,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,23
+line:5d759abb,Line 2,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,24
+line:cb459dcc,Line 3,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,25
+line:68d0f952,Line 4,/Users/mjake/Projects/zig-yarnspinner/tests/cases/Once.yarn,Start,26

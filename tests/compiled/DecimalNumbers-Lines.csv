@@ -1,0 +1,5 @@
+id,text,file,node,lineNumber
+line:eb2aa304,Success,/Users/mjake/Projects/zig-yarnspinner/tests/cases/DecimalNumbers.yarn,Start,10
+line:7d1aa473,Success,/Users/mjake/Projects/zig-yarnspinner/tests/cases/DecimalNumbers.yarn,Start,14
+line:c74badea,Success,/Users/mjake/Projects/zig-yarnspinner/tests/cases/DecimalNumbers.yarn,Start,18
+line:517baa9d,Here's a number: {0},/Users/mjake/Projects/zig-yarnspinner/tests/cases/DecimalNumbers.yarn,Start,22
