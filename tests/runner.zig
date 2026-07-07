@@ -104,6 +104,15 @@ const TestParams = struct {
     testplan: []const u8,
 };
 
+fn debugProgram(program: *const Yarn.Program) void {
+    for (program.nodes.items) |node| {
+        std.log.info("Node: {s}", .{node.value.?.name});
+        for (node.value.?.instructions.items) |instruction| {
+            std.log.info("  Instruction: {any}", .{instruction.InstructionType.?});
+        }
+    }
+}
+
 pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !void {
     var runner = Runner{
         .test_plan = try TestPlan.init_from_file(allocator, io, params.testplan),
@@ -131,6 +140,7 @@ pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !vo
 
     if (runner.had_error) {
         std.log.err("[!] Test plan failed", .{});
+        debugProgram(&program);
         return error.TestPlanFailed;
     } else {
         std.log.info("[!] Test plan passed", .{});

@@ -57,6 +57,7 @@ pub fn defaultOptionHandler(_: ?*anyopaque, options: []Option) void {
 
 const Value = union(enum) {
     boolValue: bool,
+    floatValue: f32,
 };
 
 state: ExecutionState,
@@ -154,11 +155,19 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                 self.stack[self.stack_top] = Value{ .boolValue = pushBool.value };
                 self.stack_top += 1;
             },
+            .pushFloat => |pushFloat| {
+                self.stack[self.stack_top] = Value{ .floatValue = pushFloat.value };
+                self.stack_top += 1;
+            },
+            .jumpTo => |jumpTo| {
+                self.pc = @as(usize, @intCast(jumpTo.destination));
+                continue;
+            },
             .jumpIfFalse => |jumpIfFalse| {
-                const value = self.stack[self.stack_top];
+                const value = self.stack[self.stack_top - 1];
 
                 if (!value.boolValue) {
-                    self.pc = @as(usize, @intCast(jumpIfFalse.destination)) - 1;
+                    self.pc = @as(usize, @intCast(jumpIfFalse.destination));
                     continue;
                 }
             },
