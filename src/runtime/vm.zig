@@ -6,6 +6,7 @@ const std = @import("std");
 const Yarn = @import("../proto/Yarn.pb.zig");
 
 const MAX_OPTIONS = 12;
+const MAX_STACK = 256; // probably enough right?
 
 pub const LineHandler = *const fn (context: ?*anyopaque, lineID: []const u8) void;
 pub const OptionHandler = *const fn (context: ?*anyopaque, options: []Option) void;
@@ -54,10 +55,16 @@ pub fn defaultOptionHandler(_: ?*anyopaque, options: []Option) void {
     }
 }
 
+const Value = union(enum) {
+    boolValue: bool,
+};
+
 state: ExecutionState,
 program: *const Yarn.Program,
 node: *const Yarn.Node,
 pc: usize,
+stack: [MAX_STACK]Value,
+stack_top: usize,
 
 options: [MAX_OPTIONS]Option,
 num_options: usize,
@@ -75,6 +82,8 @@ pub fn init(program: *const Yarn.Program, callbacks: Callbacks) Self {
         .program = program,
         .node = &program.nodes.items[0].value.?,
         .pc = 0,
+        .stack = undefined,
+        .stack_top = 0,
         .options = undefined,
         .num_options = 0,
         .context = callbacks.context,
@@ -133,6 +142,24 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                         self.pc = 0;
                         continue;
                     }
+                }
+            },
+            .pop => {
+                if (self.stack_top == 0) {
+                    return error.StackUnderflow;
+                }
+                self.stack_top -= 1;
+            },
+            .pushBool => |pushBool| {
+                self.stack[self.stack_top] = Value{ .boolValue = pushBool.value };
+                self.stack_top += 1;
+            },
+            .jumpIfFalse => |jumpIfFalse| {
+                const value = self.stack[self.stack_top];
+
+                if (!value.boolValue) {
+                    self.pc = @as(usize, @intCast(jumpIfFalse.destination)) - 1;
+                    continue;
                 }
             },
             .@"return" => return,
