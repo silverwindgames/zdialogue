@@ -138,6 +138,7 @@ pub fn run(self: *Self, opts: RunOpts) !void {
             .@"return" => return,
             else => |inst| {
                 std.log.warn("Unsupported instruction: {s}", .{@tagName(inst)});
+                return error.UnsupportedInstruction;
             },
         }
 
