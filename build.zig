@@ -222,5 +222,8 @@ pub fn build(b: *std.Build) void {
 
     var testplan = b.step("testplan", "Run testplan tests");
     var run_testplan = b.addRunArtifact(testplan_exe);
+    if (b.args) |args| {
+        run_testplan.addArgs(args);
+    }
     testplan.dependOn(&run_testplan.step);
 }

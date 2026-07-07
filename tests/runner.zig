@@ -149,10 +149,7 @@ fn printSummary(passed_tests: []const []const u8, failed_tests: []const []const 
     std.log.info("Summary: {d} passed, {d} failed", .{ passed_tests.len, failed_tests.len });
 }
 
-pub fn main(init: std.process.Init) !void {
-    const allocator = init.arena.allocator();
-    const io = init.io;
-
+pub fn runAll(allocator: std.mem.Allocator, io: std.Io) !void {
     const dir = std.Io.Dir.cwd().openDir(io, "tests/compiled", .{}) catch |err| {
         std.log.err("Failed to open directory: {any}", .{err});
         return err;
@@ -203,4 +200,41 @@ pub fn main(init: std.process.Init) !void {
     if (list_of_failed_tests.items.len > 0) {
         return error.NotAllTestsPassed;
     }
+}
+
+pub fn runOne(allocator: std.mem.Allocator, io: std.Io, yarnc_path: []const u8) !void {
+    const base_path = yarnc_path[0 .. yarnc_path.len - 6]; // Remove the ".yarnc" extension
+    const testplan_path = try std.fmt.allocPrint(allocator, "{s}.testplan", .{base_path});
+    const lines_csv_path = try std.fmt.allocPrint(allocator, "{s}-Lines.csv", .{base_path});
+    const metadata_csv_path = try std.fmt.allocPrint(allocator, "{s}-Metadata.csv", .{base_path});
+
+    std.log.info("Running single test for file: {s}", .{testplan_path});
+
+    runTest(allocator, io, .{
+        .yarnc = yarnc_path,
+        .lines_csv = lines_csv_path,
+        .metadata_csv = metadata_csv_path,
+        .testplan = testplan_path,
+    }) catch |err| {
+        std.log.err("Test failed for file: {s} with error: {any}\n\n", .{ testplan_path, err });
+        return err;
+    };
+
+    std.log.info("Test passed for file: {s}\n\n", .{testplan_path});
+}
+
+pub fn main(init: std.process.Init) !void {
+    const allocator = init.arena.allocator();
+    const io = init.io;
+
+    const args = try init.minimal.args.toSlice(allocator);
+
+    if (args.len < 2) {
+        std.log.info("No testplan specified, running all tests in `tests/compiled`.", .{});
+        try runAll(allocator, io);
+        return;
+    }
+
+    const testplan_path = args[1];
+    try runOne(allocator, io, testplan_path);
 }
