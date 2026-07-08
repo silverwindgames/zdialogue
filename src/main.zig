@@ -80,7 +80,7 @@ pub fn main(init: std.process.Init) !void {
             },
             .waitingOnOptionSelection => {
                 // Ask user for option
-                std.debug.print("Select an option (0-{d}): ", .{vm.num_options});
+                std.debug.print("Select an option (0-{d}): ", .{vm.options.count});
                 if (try stdin_reader.interface.takeDelimiter('\n')) |line| {
                     const user_input = std.fmt.parseInt(usize, line, 10) catch |err| {
                         std.log.err("Failed to parse user input: {any}", .{err});

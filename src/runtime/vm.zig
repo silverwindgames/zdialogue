@@ -64,6 +64,13 @@ const Stack = struct {
     items: [MAX_STACK]Value,
     top: usize,
 
+    pub fn init() Stack {
+        return Stack{
+            .items = undefined,
+            .top = 0,
+        };
+    }
+
     pub fn push(self: *Stack, value: Value) !void {
         if (self.top >= MAX_STACK) {
             return error.StackOverflow;
@@ -88,6 +95,47 @@ const Stack = struct {
     }
 };
 
+const OptionSet = struct {
+    options: [MAX_OPTIONS]Option,
+    count: usize,
+
+    pub fn init() OptionSet {
+        return .{
+            .options = undefined,
+            .count = 0,
+        };
+    }
+
+    pub fn add(self: *OptionSet, line_id: []const u8, destination: i32, enabled: bool) !void {
+        if (self.count >= MAX_OPTIONS) {
+            return error.MaxOptionsReached;
+        }
+
+        self.options[self.count] = Option{
+            .index = self.count,
+            .line_id = line_id,
+            .destination = destination,
+            .enabled = enabled,
+        };
+        self.count += 1;
+    }
+
+    pub fn get(self: *OptionSet, index: usize) !Option {
+        if (index >= self.count) {
+            return error.InvalidOptionIndex;
+        }
+        return self.options[index];
+    }
+
+    pub fn items(self: *OptionSet) []Option {
+        return self.options[0..self.count];
+    }
+
+    pub fn clear(self: *OptionSet) void {
+        self.count = 0;
+    }
+};
+
 // VM State
 state: ExecutionState,
 program: *const Yarn.Program,
@@ -96,8 +144,7 @@ pc: usize,
 stack: Stack,
 
 // Options
-options: [MAX_OPTIONS]Option,
-num_options: usize,
+options: OptionSet,
 
 // Callbacks
 context: ?*anyopaque,
@@ -114,14 +161,10 @@ pub fn init(program: *const Yarn.Program, callbacks: Callbacks) Self {
         .program = program,
         .node = &program.nodes.items[0].value.?,
         .pc = 0,
-        .stack = .{
-            .items = undefined,
-            .top = 0,
-        },
+        .stack = Stack.init(),
 
         // Options
-        .options = undefined,
-        .num_options = 0,
+        .options = OptionSet.init(),
 
         // Callbacks
         .context = callbacks.context,
@@ -142,12 +185,11 @@ pub fn setSelectedOption(self: *Self, maybe_index: ?usize) !void {
     }
 
     if (maybe_index) |index| {
-        if (index >= self.num_options) {
-            std.log.err("Invalid option index: {d}. Number of options available: {d}", .{ index, self.num_options });
+        const selected_option = self.options.get(index) catch {
+            std.log.err("Invalid option index: {d}. Number of options available: {d}", .{ index, self.options.count });
             return error.InvalidOptionIndex;
-        }
+        };
 
-        const selected_option = self.options[index];
         try self.stack.push(Value{ .floatValue = @floatFromInt(selected_option.destination) });
         try self.stack.push(Value{ .boolValue = true });
     } else {
@@ -155,7 +197,7 @@ pub fn setSelectedOption(self: *Self, maybe_index: ?usize) !void {
     }
 
     self.state = .waitingForContinue;
-    self.num_options = 0;
+    self.options.clear();
 }
 
 pub const RunOpts = struct {
@@ -177,23 +219,14 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                 self.line_handler(self.context, runLine.lineID);
             },
             .addOption => |addOption| {
-                if (self.num_options >= MAX_OPTIONS) {
+                // TODO: Condition stuff
+                self.options.add(addOption.lineID, addOption.destination, true) catch {
                     std.log.err("Maximum number of options reached, cannot add: {s}", .{addOption.lineID});
                     return error.MaxOptionsReached;
-                }
-
-                // TODO: Centralise Options in some kind of OptionSet construct
-                self.options[self.num_options] = Option{
-                    .index = self.num_options,
-                    .line_id = addOption.lineID,
-                    .destination = addOption.destination,
-                    .enabled = true, // TODO: Condition stuff
                 };
-
-                self.num_options += 1;
             },
             .showOptions => {
-                self.option_handler(self.context, self.options[0..self.num_options]);
+                self.option_handler(self.context, self.options.items());
                 self.state = .waitingOnOptionSelection;
             },
             .runNode => |runNode| {
