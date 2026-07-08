@@ -69,7 +69,32 @@ pub fn main(init: std.process.Init) !void {
         .line_handler = lineHandler,
         .option_handler = optionHandler,
     });
-    try vm.run(.{ .tracing = false });
+
+    var stdin_buffer: [256]u8 = undefined;
+    var stdin_reader = std.Io.File.stdin().reader(io, &stdin_buffer);
+
+    loop: while (true) {
+        try switch (vm.state) {
+            .running, .waitingForContinue => {
+                try vm.run(.{ .tracing = true });
+            },
+            .waitingOnOptionSelection => {
+                // Ask user for option
+                std.debug.print("Select an option (0-{d}): ", .{vm.num_options});
+                if (try stdin_reader.interface.takeDelimiter('\n')) |line| {
+                    const user_input = std.fmt.parseInt(usize, line, 10) catch |err| {
+                        std.log.err("Failed to parse user input: {any}", .{err});
+                        continue;
+                    };
+                    try vm.setSelectedOption(user_input);
+                } else {
+                    std.log.err("Failed to read user input.", .{});
+                }
+            },
+            .deliveringContent => error.NotImplemented,
+            .stopped => break :loop,
+        };
+    }
 
     std.log.info("[!] Program ended", .{});
 }

@@ -10,6 +10,7 @@ const Yarn = zdialogue.Yarn;
 const Runner = struct {
     test_plan: TestPlan,
     lines: std.StringHashMap(zdialogue.Dialogue.Line),
+    metadata: std.StringHashMap(zdialogue.Dialogue.Metadata),
     step_index: usize = 0,
     had_error: bool = false,
 
@@ -34,6 +35,8 @@ const Runner = struct {
             return;
         };
 
+        // const maybe_meta_data = self.metadata.get(line_id);
+
         std.log.info("Matching line: {s}", .{line_data.text});
 
         const current_test_plan_step = self.test_plan.steps.items[self.step_index];
@@ -48,6 +51,24 @@ const Runner = struct {
             std.log.err("Line text does not match expected text. Expected: {s}, Got: {s}", .{ step.line.expected_text, line_data.text });
             self.had_error = true;
         }
+
+        // if (maybe_meta_data) |metadata| {
+        //     const expected_hashtags = step.line.expected_hashtags.items;
+        //     const actual_hashtags = metadata.tags.items;
+
+        //     if (expected_hashtags.len != actual_hashtags.len) {
+        //         std.log.err("Line hashtags count does not match expected count. Expected: {d}, Got: {d}", .{ expected_hashtags.len, actual_hashtags.len });
+        //         self.had_error = true;
+        //     } else {
+        //         for (expected_hashtags, 0..) |expected_tag, index| {
+        //             const actual_tag = actual_hashtags[index];
+        //             if (!std.mem.eql(u8, expected_tag, actual_tag)) {
+        //                 std.log.err("Line hashtag at index {d} does not match expected hashtag. Expected: {s}, Got: {s}", .{ index, expected_tag, actual_tag });
+        //                 self.had_error = true;
+        //             }
+        //         }
+        //     }
+        // }
 
         // const expected_hashtags_match = std.mem.eql(u8, line_data.hashtags, step.line.expected_hashtags);
         // if (!expected_hashtags_match) {
@@ -117,6 +138,7 @@ pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !vo
     var runner = Runner{
         .test_plan = try TestPlan.init_from_file(allocator, io, params.testplan),
         .lines = undefined,
+        .metadata = undefined,
     };
 
     const program: Yarn.Program = zdialogue.parseProtobuf(params.yarnc, io, allocator) catch |err| {
@@ -129,6 +151,11 @@ pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !vo
         return err;
     };
 
+    runner.metadata = zdialogue.Dialogue.parseMetadataFromCsv(io, allocator, params.metadata_csv) catch |err| {
+        std.log.err("Failed to parse metadata CSV: {any}", .{err});
+        return err;
+    };
+
     std.log.info("[!] Program started", .{});
 
     var vm = zdialogue.VirtualMachine.init(&program, .{
@@ -136,7 +163,10 @@ pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !vo
         .line_handler = Runner.lineHandler,
         .option_handler = Runner.optionHandler,
     });
-    try vm.run(.{ .tracing = false });
+    vm.run(.{ .tracing = true }) catch |err| {
+        std.log.err("Virtual machine execution failed: {any}", .{err});
+        runner.had_error = true;
+    };
 
     if (runner.had_error) {
         std.log.err("[!] Test plan failed", .{});

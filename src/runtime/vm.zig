@@ -60,16 +60,46 @@ const Value = union(enum) {
     floatValue: f32,
 };
 
+const Stack = struct {
+    items: [MAX_STACK]Value,
+    top: usize,
+
+    pub fn push(self: *Stack, value: Value) !void {
+        if (self.top >= MAX_STACK) {
+            return error.StackOverflow;
+        }
+        self.items[self.top] = value;
+        self.top += 1;
+    }
+
+    pub fn pop(self: *Stack) !Value {
+        if (self.top == 0) {
+            return error.StackUnderflow;
+        }
+        self.top -= 1;
+        return self.items[self.top];
+    }
+
+    pub fn peek(self: *Stack) !Value {
+        if (self.top == 0) {
+            return error.StackUnderflow;
+        }
+        return self.items[self.top - 1];
+    }
+};
+
+// VM State
 state: ExecutionState,
 program: *const Yarn.Program,
 node: *const Yarn.Node,
 pc: usize,
-stack: [MAX_STACK]Value,
-stack_top: usize,
+stack: Stack,
 
+// Options
 options: [MAX_OPTIONS]Option,
 num_options: usize,
 
+// Callbacks
 context: ?*anyopaque,
 line_handler: LineHandler,
 option_handler: OptionHandler,
@@ -79,14 +109,21 @@ const Self = @This();
 pub fn init(program: *const Yarn.Program, callbacks: Callbacks) Self {
     std.debug.assert(program.nodes.items.len > 0);
     return Self{
+        // VM State
         .state = .running,
         .program = program,
         .node = &program.nodes.items[0].value.?,
         .pc = 0,
-        .stack = undefined,
-        .stack_top = 0,
+        .stack = .{
+            .items = undefined,
+            .top = 0,
+        },
+
+        // Options
         .options = undefined,
         .num_options = 0,
+
+        // Callbacks
         .context = callbacks.context,
         .line_handler = if (callbacks.line_handler) |cb| cb else defaultLineHandler,
         .option_handler = if (callbacks.option_handler) |cb| cb else defaultOptionHandler,
@@ -97,12 +134,38 @@ fn traceInstruction(instruction: Yarn.Instruction) void {
     std.log.debug("Executing instruction: {s} with payload {any}", .{ @tagName(instruction.InstructionType.?), instruction.InstructionType.? });
 }
 
+/// Sets the selected option. Pass null if no option is selected.
+pub fn setSelectedOption(self: *Self, maybe_index: ?usize) !void {
+    if (self.state != .waitingOnOptionSelection) {
+        std.log.err("Cannot set selected option when not in 'waitingOnOptionSelection' state. Current state: {s}", .{@tagName(self.state)});
+        return error.InvalidState;
+    }
+
+    if (maybe_index) |index| {
+        if (index >= self.num_options) {
+            std.log.err("Invalid option index: {d}. Number of options available: {d}", .{ index, self.num_options });
+            return error.InvalidOptionIndex;
+        }
+
+        const selected_option = self.options[index];
+        try self.stack.push(Value{ .floatValue = @floatFromInt(selected_option.destination) });
+        try self.stack.push(Value{ .boolValue = true });
+    } else {
+        try self.stack.push(Value{ .boolValue = false });
+    }
+
+    self.state = .waitingForContinue;
+    self.num_options = 0;
+}
+
 pub const RunOpts = struct {
     tracing: bool = false,
 };
 
 pub fn run(self: *Self, opts: RunOpts) !void {
-    while (true) {
+    self.state = .running;
+
+    while (self.state == .running) {
         const instruction = self.node.instructions.items[self.pc];
 
         if (opts.tracing) {
@@ -115,10 +178,11 @@ pub fn run(self: *Self, opts: RunOpts) !void {
             },
             .addOption => |addOption| {
                 if (self.num_options >= MAX_OPTIONS) {
-                    std.log.err("Maximum number of options reached, ignoring option: {s}", .{addOption.lineID});
-                    break;
+                    std.log.err("Maximum number of options reached, cannot add: {s}", .{addOption.lineID});
+                    return error.MaxOptionsReached;
                 }
 
+                // TODO: Centralise Options in some kind of OptionSet construct
                 self.options[self.num_options] = Option{
                     .index = self.num_options,
                     .line_id = addOption.lineID,
@@ -130,45 +194,36 @@ pub fn run(self: *Self, opts: RunOpts) !void {
             },
             .showOptions => {
                 self.option_handler(self.context, self.options[0..self.num_options]);
-                self.num_options = 0;
                 self.state = .waitingOnOptionSelection;
-                return;
             },
             .runNode => |runNode| {
                 // TODO: Detours and branching and stuff
                 const nodeName = runNode.nodeName;
-                for (self.program.nodes.items) |node_pair| {
+                for (self.program.nodes.items) |*node_pair| {
                     if (std.mem.eql(u8, node_pair.key, nodeName)) {
                         self.node = &node_pair.value.?;
                         self.pc = 0;
-                        continue;
+                        break;
                     }
                 }
             },
             .pop => {
-                if (self.stack_top == 0) {
-                    return error.StackUnderflow;
-                }
-                self.stack_top -= 1;
+                _ = try self.stack.pop();
             },
             .pushBool => |pushBool| {
-                self.stack[self.stack_top] = Value{ .boolValue = pushBool.value };
-                self.stack_top += 1;
+                try self.stack.push(Value{ .boolValue = pushBool.value });
             },
             .pushFloat => |pushFloat| {
-                self.stack[self.stack_top] = Value{ .floatValue = pushFloat.value };
-                self.stack_top += 1;
+                try self.stack.push(Value{ .floatValue = pushFloat.value });
             },
             .jumpTo => |jumpTo| {
-                self.pc = @as(usize, @intCast(jumpTo.destination));
-                continue;
+                self.pc = @as(usize, @intCast(jumpTo.destination)) - 1;
             },
             .jumpIfFalse => |jumpIfFalse| {
-                const value = self.stack[self.stack_top - 1];
+                const value = try self.stack.peek();
 
                 if (!value.boolValue) {
-                    self.pc = @as(usize, @intCast(jumpIfFalse.destination));
-                    continue;
+                    self.pc = @as(usize, @intCast(jumpIfFalse.destination)) - 1;
                 }
             },
             .@"return" => return,
@@ -179,5 +234,12 @@ pub fn run(self: *Self, opts: RunOpts) !void {
         }
 
         self.pc += 1;
+
+        std.log.debug("PC after execution: {d}, Node: {s}", .{ self.pc, self.node.name });
+
+        if (self.pc >= self.node.instructions.items.len) {
+            // TODO: Handle node completion properly, including detours and branching
+            self.state = .stopped;
+        }
     }
 }
