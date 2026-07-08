@@ -58,6 +58,7 @@ pub fn defaultOptionHandler(_: ?*anyopaque, options: []Option) void {
 const Value = union(enum) {
     bool_value: bool,
     float_value: f32,
+    string_value: *String,
 };
 
 const Stack = struct {
@@ -136,6 +137,9 @@ const OptionSet = struct {
     }
 };
 
+// TODO: This needs to be a VTable so consuming code can
+// provide their own storage. As far as we're concerned, it's
+// pretty much read-only.
 const VariablesTable = struct {
     hash_map: std.StringHashMap(Value),
     allocator: std.mem.Allocator,
@@ -156,6 +160,11 @@ const VariablesTable = struct {
     }
 };
 
+const String = struct {
+    str: []u8,
+    next: ?*String,
+};
+
 // VM State
 state: ExecutionState,
 program: *const Yarn.Program,
@@ -163,12 +172,15 @@ node: *const Yarn.Node,
 pc: usize,
 stack: Stack,
 
-variables: VariablesTable,
+// Heap
+allocator: std.mem.Allocator,
+strings: ?*String,
 
 // Options
 options: OptionSet,
 
 // Callbacks
+variables: VariablesTable,
 context: ?*anyopaque,
 line_handler: LineHandler,
 option_handler: OptionHandler,
@@ -185,6 +197,8 @@ pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, callback
         .pc = 0,
         .stack = Stack.init(),
         .variables = VariablesTable.init(allocator),
+        .strings = null,
+        .allocator = allocator,
 
         // Options
         .options = OptionSet.init(),
@@ -198,6 +212,21 @@ pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, callback
 
 pub fn deinit(self: *Self) void {
     self.variables.deinit();
+}
+
+fn allocString(self: *Self, text: []const u8) !*String {
+    var str_obj = try self.allocator.create(String);
+    const str_contents = try self.allocator.dupe(u8, text);
+
+    const current_head = self.strings;
+
+    str_obj.str = str_contents;
+    str_obj.next = null;
+    str_obj.next = current_head;
+
+    self.strings = str_obj;
+
+    return str_obj;
 }
 
 fn traceInstruction(instruction: Yarn.Instruction) void {
@@ -275,6 +304,10 @@ pub fn run(self: *Self, opts: RunOpts) !void {
             },
             .pushFloat => |pushFloat| {
                 try self.stack.push(Value{ .float_value = pushFloat.value });
+            },
+            .pushString => |pushString| {
+                const str_object = try self.allocString(pushString.value);
+                try self.stack.push(Value{ .string_value = str_object });
             },
             .pushVariable => |pushVariable| {
                 if (opts.tracing) std.log.debug("Looking up variable `{s}`", .{pushVariable.variableName});
