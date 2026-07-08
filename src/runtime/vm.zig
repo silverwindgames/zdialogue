@@ -138,8 +138,7 @@ const OptionSet = struct {
 };
 
 // TODO: This needs to be a VTable so consuming code can
-// provide their own storage. As far as we're concerned, it's
-// pretty much read-only.
+// provide their own storage.
 const VariablesTable = struct {
     hash_map: std.StringHashMap(Value),
     allocator: std.mem.Allocator,
@@ -151,11 +150,20 @@ const VariablesTable = struct {
         };
     }
 
+    /// Get value associated wtih variable, or null if it doesn't exist
     pub fn getVariable(self: *VariablesTable, name: []const u8) ?Value {
         return self.hash_map.get(name);
     }
 
+    /// Set or replace variable value
+    pub fn setVariable(self: *VariablesTable, name: []const u8, value: Value) !void {
+        // TODO: Fix memory leak of keys
+        const key = try self.allocator.dupe(u8, name);
+        try self.hash_map.put(key, value);
+    }
+
     pub fn deinit(self: *VariablesTable) void {
+        // TODO: Clean up keys
         self.hash_map.deinit();
     }
 };
@@ -346,6 +354,10 @@ pub fn run(self: *Self, opts: RunOpts) !void {
 
                 return error.ValueNotFound;
             },
+            .storeVariable => |storeVariable| {
+                const value = try self.stack.peek();
+                try self.variables.setVariable(storeVariable.variableName, value);
+            },
             .jumpTo => |jumpTo| {
                 self.pc = @as(usize, @intCast(jumpTo.destination)) - 1;
             },
@@ -355,6 +367,17 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                 if (!value.bool_value) {
                     self.pc = @as(usize, @intCast(jumpIfFalse.destination)) - 1;
                 }
+            },
+            .callFunc => |callFunc| {
+                std.log.info("Pretending to call {s}", .{callFunc.functionName});
+                // what if we just don't do anything
+                // break :run_instruction;
+                return error.FakeFunctions;
+            },
+            .stop => {
+                // TODO: Unwind the callstack, and what not
+                self.state = .stopped;
+                return;
             },
             .@"return" => return,
             else => |inst| {
