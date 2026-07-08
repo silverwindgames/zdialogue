@@ -21,6 +21,43 @@ Yarn Spinner® is a trademark of Secret Lab Pty. Ltd., the original creators, an
 
 zdialogue, like Yarn Spinner, is MIT licensed. See LICENSE for exact terms.
 
+## Status
+Comparing against the upstream test suite:
+```sh
+info: Passed Tests:
+info:  - IfStatements.yarnc
+info:  - Lines.yarnc
+error: Failed Tests:
+error:  - ShadowLines.yarnc
+error:  - Detours.yarnc
+error:  - VariableStorage.yarnc
+error:  - NodeGroupVisitTracking.yarnc
+error:  - DecimalNumbers.yarnc
+error:  - Visited.yarnc
+error:  - LineGroups.yarnc
+error:  - Types.yarnc
+error:  - Enums-FunctionsReturningStringMayBeComparedToAnyStringEnum.yarnc
+error:  - InlineExpressions.yarnc
+error:  - SmartVariables.yarnc
+error:  - NodeGroupsWithImplicitDeclarations.yarnc
+error:  - Escaping.yarnc
+error:  - Jumps.yarnc
+error:  - Once.yarnc
+error:  - FormatFunctions.yarnc
+error:  - Inference-FunctionsAndVarsInheritType.yarnc
+error:  - ShortcutOptions.yarnc
+error:  - NodeGroups.yarnc
+error:  - Smileys.yarnc
+error:  - Indentation.yarnc
+error:  - Enums.yarnc
+error:  - Functions.yarnc
+error:  - Inference-FunctionsCalledWithConvertibleParameters.yarnc
+error:  - VisitCount.yarnc
+error:  - VisitTracking.yarnc
+error:  - Commands.yarnc
+error:  - NodeGroupsContentQuerying.yarnc
+info: Summary: 2 passed, 28 failed
+```
 
 ## Updating Protobuf Mappings
 To update for newer versions of yarn spinner:
