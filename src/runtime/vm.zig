@@ -56,8 +56,8 @@ pub fn defaultOptionHandler(_: ?*anyopaque, options: []Option) void {
 }
 
 const Value = union(enum) {
-    boolValue: bool,
-    floatValue: f32,
+    bool_value: bool,
+    float_value: f32,
 };
 
 const Stack = struct {
@@ -136,12 +136,34 @@ const OptionSet = struct {
     }
 };
 
+const VariablesTable = struct {
+    hash_map: std.StringHashMap(Value),
+    allocator: std.mem.Allocator,
+
+    pub fn init(allocator: std.mem.Allocator) VariablesTable {
+        return VariablesTable{
+            .hash_map = std.StringHashMap(Value).init(allocator),
+            .allocator = allocator,
+        };
+    }
+
+    pub fn getVariable(self: *VariablesTable, name: []const u8) ?Value {
+        return self.hash_map.get(name);
+    }
+
+    pub fn deinit(self: *VariablesTable) void {
+        self.hash_map.deinit();
+    }
+};
+
 // VM State
 state: ExecutionState,
 program: *const Yarn.Program,
 node: *const Yarn.Node,
 pc: usize,
 stack: Stack,
+
+variables: VariablesTable,
 
 // Options
 options: OptionSet,
@@ -153,7 +175,7 @@ option_handler: OptionHandler,
 
 const Self = @This();
 
-pub fn init(program: *const Yarn.Program, callbacks: Callbacks) Self {
+pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, callbacks: Callbacks) Self {
     std.debug.assert(program.nodes.items.len > 0);
     return Self{
         // VM State
@@ -162,6 +184,7 @@ pub fn init(program: *const Yarn.Program, callbacks: Callbacks) Self {
         .node = &program.nodes.items[0].value.?,
         .pc = 0,
         .stack = Stack.init(),
+        .variables = VariablesTable.init(allocator),
 
         // Options
         .options = OptionSet.init(),
@@ -171,6 +194,10 @@ pub fn init(program: *const Yarn.Program, callbacks: Callbacks) Self {
         .line_handler = if (callbacks.line_handler) |cb| cb else defaultLineHandler,
         .option_handler = if (callbacks.option_handler) |cb| cb else defaultOptionHandler,
     };
+}
+
+pub fn deinit(self: *Self) void {
+    self.variables.deinit();
 }
 
 fn traceInstruction(instruction: Yarn.Instruction) void {
@@ -190,10 +217,10 @@ pub fn setSelectedOption(self: *Self, maybe_index: ?usize) !void {
             return error.InvalidOptionIndex;
         };
 
-        try self.stack.push(Value{ .floatValue = @floatFromInt(selected_option.destination) });
-        try self.stack.push(Value{ .boolValue = true });
+        try self.stack.push(Value{ .float_value = @floatFromInt(selected_option.destination) });
+        try self.stack.push(Value{ .bool_value = true });
     } else {
-        try self.stack.push(Value{ .boolValue = false });
+        try self.stack.push(Value{ .bool_value = false });
     }
 
     self.state = .waitingForContinue;
@@ -214,7 +241,7 @@ pub fn run(self: *Self, opts: RunOpts) !void {
             traceInstruction(instruction);
         }
 
-        switch (instruction.InstructionType.?) {
+        run_instruction: switch (instruction.InstructionType.?) {
             .runLine => |runLine| {
                 self.line_handler(self.context, runLine.lineID);
             },
@@ -244,10 +271,47 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                 _ = try self.stack.pop();
             },
             .pushBool => |pushBool| {
-                try self.stack.push(Value{ .boolValue = pushBool.value });
+                try self.stack.push(Value{ .bool_value = pushBool.value });
             },
             .pushFloat => |pushFloat| {
-                try self.stack.push(Value{ .floatValue = pushFloat.value });
+                try self.stack.push(Value{ .float_value = pushFloat.value });
+            },
+            .pushVariable => |pushVariable| {
+                if (opts.tracing) std.log.debug("Looking up variable `{s}`", .{pushVariable.variableName});
+
+                // Try get from variable storage
+                if (self.variables.getVariable(pushVariable.variableName)) |value| {
+                    try self.stack.push(value);
+                    break;
+                }
+
+                // Try get from initial values
+                for (self.program.initial_values.items) |*var_pair| {
+                    if (opts.tracing) std.log.debug("Comparing val: {s}", .{var_pair.key});
+                    if (std.mem.eql(u8, var_pair.key, pushVariable.variableName)) {
+                        if (opts.tracing) std.log.debug("Found val: {s}", .{var_pair.key});
+                        if (var_pair.value == null or var_pair.value.?.value == null) {
+                            return error.ValueCannotBeEmpty;
+                        }
+
+                        switch (var_pair.value.?.value.?) {
+                            .bool_value => |bv| {
+                                try self.stack.push(Value{ .bool_value = bv });
+                            },
+                            .float_value => |fv| {
+                                try self.stack.push(Value{ .float_value = fv });
+                            },
+                            else => {
+                                std.log.err("Unsupported variable type for variable: {s}", .{pushVariable.variableName});
+                                return error.UnsupportedVariableType;
+                            },
+                        }
+
+                        break :run_instruction;
+                    }
+                }
+
+                return error.ValueNotFound;
             },
             .jumpTo => |jumpTo| {
                 self.pc = @as(usize, @intCast(jumpTo.destination)) - 1;
@@ -255,7 +319,7 @@ pub fn run(self: *Self, opts: RunOpts) !void {
             .jumpIfFalse => |jumpIfFalse| {
                 const value = try self.stack.peek();
 
-                if (!value.boolValue) {
+                if (!value.bool_value) {
                     self.pc = @as(usize, @intCast(jumpIfFalse.destination)) - 1;
                 }
             },

@@ -65,10 +65,11 @@ pub fn main(init: std.process.Init) !void {
 
     std.log.info("[!] Program started", .{});
 
-    var vm = zdialogue.VirtualMachine.init(&program, .{
+    var vm = zdialogue.VirtualMachine.init(&program, arena, .{
         .line_handler = lineHandler,
         .option_handler = optionHandler,
     });
+    defer vm.deinit();
 
     var stdin_buffer: [256]u8 = undefined;
     var stdin_reader = std.Io.File.stdin().reader(io, &stdin_buffer);

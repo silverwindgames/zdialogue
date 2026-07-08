@@ -158,12 +158,14 @@ pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !vo
 
     std.log.info("[!] Program started", .{});
 
-    var vm = zdialogue.VirtualMachine.init(&program, .{
+    var vm = zdialogue.VirtualMachine.init(&program, allocator, .{
         .context = &runner,
         .line_handler = Runner.lineHandler,
         .option_handler = Runner.optionHandler,
     });
-    vm.run(.{ .tracing = true }) catch |err| {
+    defer vm.deinit();
+
+    vm.run(.{ .tracing = false }) catch |err| {
         std.log.err("Virtual machine execution failed: {any}", .{err});
         runner.had_error = true;
     };
