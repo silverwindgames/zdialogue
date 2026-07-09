@@ -404,15 +404,18 @@ pub fn run(self: *Self, opts: RunOpts) !void {
             },
             .callFunc => |callFunc| {
                 // The compiler will put the number of args at the top of the stack
-                const param_count = @as(usize, @intFromFloat((try self.stack.pop()).float_value));
+                const top_value = try self.stack.pop();
+                const param_count = @as(usize, @intFromFloat((top_value.float_value)));
 
                 if (opts.tracing) std.log.debug("Calling `{s}` with {d} param(s)", .{ callFunc.functionName, param_count });
 
-                var params = try std.ArrayList(Value).initCapacity(self.allocator, param_count);
+                var params = try self.allocator.alloc(Value, param_count);
+                defer self.allocator.free(params);
 
-                for (0..@as(usize, param_count)) |_| {
+                // Compiler adds params in reverse order
+                for (0..@as(usize, param_count)) |idx| {
                     const param = try self.stack.pop();
-                    try params.append(self.allocator, param);
+                    params[param_count - 1 - idx] = param;
                 }
 
                 const func = self.functions.getFunction(callFunc.functionName) orelse {
@@ -420,9 +423,10 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                     return error.FunctionNotFound;
                 };
 
-                const ret = func(params.items);
+                const ret = func(params);
 
                 if (ret) |ret_val| {
+                    if (opts.tracing) std.log.debug("Function `{s}` returned a value: {any}", .{ callFunc.functionName, ret_val });
                     try self.stack.push(ret_val);
                 }
 

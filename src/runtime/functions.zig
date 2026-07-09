@@ -176,6 +176,30 @@ fn number_less_than_or_equal_to(params: []vm.Value) ?vm.Value {
     return .{ .bool_value = ret };
 }
 
+// Enum.EqualTo
+fn enum_equal_to(params: []vm.Value) ?vm.Value {
+    std.debug.assert(params.len == 2);
+
+    const ret: bool = switch (params[0]) {
+        .string_value => |a_str| blk: {
+            std.debug.assert(params[1] == vm.Value.string_value);
+            break :blk std.mem.eql(u8, a_str.str, params[1].string_value.str);
+        },
+        else => blk: {
+            std.debug.assert(params[0] == vm.Value.float_value);
+            std.debug.assert(params[1] == vm.Value.float_value);
+            break :blk params[0].float_value == params[1].float_value;
+        },
+    };
+
+    return .{ .bool_value = ret };
+}
+
+// Enum.NotEqualTo
+fn enum_not_equal_to(params: []vm.Value) ?vm.Value {
+    return .{ .bool_value = !(enum_equal_to(params).?.bool_value) };
+}
+
 // Test Only: Add Three Operands
 // TODO: Move to tests/ directory
 fn add_three_operands(params: []vm.Value) ?vm.Value {
@@ -217,6 +241,8 @@ pub fn init(allocator: std.mem.Allocator) !Self {
     try func_lib.registerFunction("Number.GreaterThanOrEqualTo", &number_greater_than_or_equal_to);
     try func_lib.registerFunction("Number.LessThan", &number_less_than);
     try func_lib.registerFunction("Number.LessThanOrEqualTo", &number_less_than_or_equal_to);
+    try func_lib.registerFunction("Enum.EqualTo", &enum_equal_to);
+    try func_lib.registerFunction("Enum.NotEqualTo", &enum_not_equal_to);
 
     // TEST ONLY
     // TODO: Should be declared in the tests directory

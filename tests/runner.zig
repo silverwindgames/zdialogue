@@ -172,7 +172,7 @@ pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !vo
     });
     defer vm.deinit();
 
-    vm.run(.{ .tracing = false }) catch |err| {
+    vm.run(.{ .tracing = true }) catch |err| {
         std.log.err("Virtual machine execution failed: {any}", .{err});
         runner.had_error = true;
     };
