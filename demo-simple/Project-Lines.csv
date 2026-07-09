@@ -1,0 +1,43 @@
+id,text,file,node,lineNumber
+line:5888408e,You encounter a mysterious traveler at the crossroads.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,6
+line:ceb847f9,"Traveler: Greetings, wanderer. These roads can be dangerous alone.",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,8
+line:74e94e60,Greet them warmly,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,10
+line:e2d94917,You: Hello there! It's good to see a friendly face.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,12
+line:414c2d89,Traveler: Indeed it is. Perhaps we could travel together a while?,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,13
+line:d77c2afe,Eye them suspiciously,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,15
+line:6d2d2367,You: I can handle myself just fine.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,16
+line:fb1d2410,Traveler: I'm sure you can. But even the strongest benefit from allies.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,17
+line:6a009b80,Ignore them and walk past,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,19
+line:fc309cf7,You walk past without a word.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,20
+line:2e77fe88,Traveler: Suit yourself... but beware the bridge ahead.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Start,21
+line:c59aa95a,You walk together down the winding path.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,TravelTogether,26
+line:7fcba0c3,Traveler: I should warn you—there's trouble at the old bridge.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,TravelTogether,28
+line:e9fba7b4,Ask for details,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,TravelTogether,30
+line:4a6ec32a,"Traveler: Bandits have been collecting ""tolls."" Unfair ones.",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,TravelTogether,32
+line:dc5ec45d,"Traveler: I know a secret path, if you're interested...",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,TravelTogether,34
+line:660fcdc4,"Traveler: But together, we might get through.",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,TravelTogether,38
+line:f03fcab3,Say nothing,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,TravelTogether,41
+line:1b480649,Traveler: I understand caution. The world has earned it.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,46
+line:8d78013e,They reach into their cloak. You tense.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,48
+line:ea93f06c,But they only pull out a worn map.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,50
+line:7ca3f71b,Traveler: Here—take this. It shows a path around the bandits at the bridge.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,52
+line:c6f2fe82,Accept the map,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,54
+line:50c2f9f5,You: Thank you. I... misjudged you.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,56
+line:f3579d6b,Traveler: Safe travels.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,57
+line:65679a1c,Refuse,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,59
+line:df369385,You: I don't need help.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Suspicious,60
+line:5e23689a,You continue alone.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Alone,65
+line:cf3ed70a,"The bridge looms ahead, three figures waiting in the shadows.",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Alone,67
+line:1432de73,"Following the hidden path, you bypass the bridge entirely.",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,SecretPath,73
+line:f1bb1913,The forest is quiet here. Peaceful.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,SecretPath,75
+line:678b1e64,"You emerge safely on the other side, grateful for the unexpected help.",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,SecretPath,77
+line:ab848d14,The bridge bandits block your path.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,83
+line:3db48a63,But you're not alone.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,86
+line:9e21eefd,"Traveler: Let us pass, or face us both.",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,87
+line:0811e98a,The bandits reconsider and step aside.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,88
+line:b240e013,Bandit: Toll's ten gold. Or we take your pack.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,90
+line:2470e764,Pay the toll,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,91
+line:b56d58f4,You hand over the coins reluctantly.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,92
+line:235d5f83,Fight!,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,93
+line:4073c2b5,"It's a tough fight, but you prevail.",/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,94
+line:d643c5c2,You cross the bridge and continue your journey.,/Users/mjake/Projects/zig-yarnspinner/demo-simple/dialogue.yarn,Bridge,97

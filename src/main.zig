@@ -24,7 +24,7 @@ fn lineHandler(ctx: ?*anyopaque, line_id: []const u8, substitutions: []const []c
     };
     defer self.allocator.free(line_data);
 
-    std.log.info("[LineHandler] {s}", .{line_data});
+    std.log.info("[Line] {s}", .{line_data});
 }
 
 fn optionHandler(_: ?*anyopaque, options: []zdialogue.Option) void {
@@ -34,7 +34,7 @@ fn optionHandler(_: ?*anyopaque, options: []zdialogue.Option) void {
             return;
         };
 
-        std.log.info("[OptionHandler] {d}. {s}", .{ opt.index, line_data.text });
+        std.log.info("[Option] {d}. {s}", .{ opt.index, line_data.text });
     }
 }
 
@@ -51,6 +51,9 @@ pub fn main(init: std.process.Init) !void {
         std.log.info("arg: {s}", .{arg});
     }
 
+    const use_tracing = (args.len >= 2 and std.mem.eql(u8, args[1], "tracing"));
+    std.log.info("Use tracing: {}", .{use_tracing});
+
     // In order to do I/O operations need an `Io` instance.
     const io = init.io;
 
@@ -65,12 +68,12 @@ pub fn main(init: std.process.Init) !void {
 
     try stdout_writer.flush(); // Don't forget to flush!
 
-    const program: Yarn.Program = zdialogue.parseProtobuf("demo/Project.yarnc", io, arena) catch |err| {
+    const program: Yarn.Program = zdialogue.parseProtobuf("demo-simple/Project.yarnc", io, arena) catch |err| {
         std.log.err("Failed to parse protobuf: {any}", .{err});
         return err;
     };
 
-    lines = zdialogue.Dialogue.parseDialogueFromCsv(io, arena, "demo/Project-Lines.csv") catch |err| {
+    lines = zdialogue.Dialogue.parseDialogueFromCsv(io, arena, "demo-simple/Project-Lines.csv") catch |err| {
         std.log.err("Failed to parse dialogue CSV: {any}", .{err});
         return err;
     };
@@ -81,7 +84,7 @@ pub fn main(init: std.process.Init) !void {
         .allocator = arena,
     };
 
-    var vm = zdialogue.VirtualMachine.init(&program, arena, .{
+    var vm = try zdialogue.VirtualMachine.init(&program, arena, .{
         .context = &ctx,
         .line_handler = lineHandler,
         .option_handler = optionHandler,
@@ -94,11 +97,11 @@ pub fn main(init: std.process.Init) !void {
     loop: while (true) {
         try switch (vm.state) {
             .running, .waitingForContinue => {
-                try vm.run(.{ .tracing = false });
+                try vm.run(.{ .tracing = use_tracing });
             },
             .waitingOnOptionSelection => {
                 // Ask user for option
-                std.debug.print("Select an option (0-{d}): ", .{vm.options.count});
+                std.debug.print("Select an option (0-{d}): ", .{vm.options.count - 1});
                 if (try stdin_reader.interface.takeDelimiter('\n')) |line| {
                     const user_input = std.fmt.parseInt(usize, line, 10) catch |err| {
                         std.log.err("Failed to parse user input: {any}", .{err});

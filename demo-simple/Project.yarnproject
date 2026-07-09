@@ -1,0 +1,29 @@
+{
+  "projectFileVersion": 4,
+  "sourceFiles": [
+    "**/*.yarn"
+  ],
+  "excludeFiles": [],
+  "baseLanguage": "en",
+  "projectName": "demo-simple",
+  "authorName": [
+    "mjakeman"
+  ],
+  "editorOptions": {
+    "yarnScriptEditor": {
+      "presenter": "try",
+      "characters": [
+        {
+          "name": "traveler",
+          "colour": "#8B5CF6",
+          "displayName": "Traveler"
+        },
+        {
+          "name": "bandit",
+          "colour": "#EF4444",
+          "displayName": "Bandit"
+        }
+      ]
+    }
+  }
+}

@@ -165,7 +165,7 @@ pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !vo
 
     std.log.info("[!] Program started", .{});
 
-    var vm = zdialogue.VirtualMachine.init(&program, allocator, .{
+    var vm = try zdialogue.VirtualMachine.init(&program, allocator, .{
         .context = &runner,
         .line_handler = Runner.lineHandler,
         .option_handler = Runner.optionHandler,

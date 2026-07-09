@@ -5,6 +5,8 @@
 const std = @import("std");
 const Yarn = @import("../proto/Yarn.pb.zig");
 
+const FunctionsTable = @import("functions.zig");
+
 const MAX_OPTIONS = 12;
 const MAX_STACK = 256; // probably enough right?
 
@@ -58,11 +60,13 @@ pub fn defaultOptionHandler(_: ?*anyopaque, options: []Option) void {
     }
 }
 
-const Value = union(enum) {
+pub const Value = union(enum) {
     bool_value: bool,
     float_value: f32,
     string_value: *String,
 };
+
+pub const YarnFn = *const fn (params: []Value) ?Value;
 
 const Stack = struct {
     items: [MAX_STACK]Value,
@@ -186,19 +190,20 @@ stack: Stack,
 // Heap
 allocator: std.mem.Allocator,
 strings: ?*String,
+functions: FunctionsTable,
+variables: VariablesTable,
 
 // Options
 options: OptionSet,
 
 // Callbacks
-variables: VariablesTable,
 context: ?*anyopaque,
 line_handler: LineHandler,
 option_handler: OptionHandler,
 
 const Self = @This();
 
-pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, callbacks: Callbacks) Self {
+pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, callbacks: Callbacks) !Self {
     std.debug.assert(program.nodes.items.len > 0);
     return Self{
         // VM State
@@ -207,9 +212,12 @@ pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, callback
         .node = &program.nodes.items[0].value.?,
         .pc = 0,
         .stack = Stack.init(),
-        .variables = VariablesTable.init(allocator),
-        .strings = null,
+
+        // Heap
         .allocator = allocator,
+        .strings = null,
+        .functions = try FunctionsTable.init(allocator),
+        .variables = VariablesTable.init(allocator),
 
         // Options
         .options = OptionSet.init(),
@@ -322,7 +330,7 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                     if (std.mem.eql(u8, node_pair.key, nodeName)) {
                         self.node = &node_pair.value.?;
                         self.pc = 0;
-                        break;
+                        break :run_instruction;
                     }
                 }
             },
@@ -345,7 +353,7 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                 // Try get from variable storage
                 if (self.variables.getVariable(pushVariable.variableName)) |value| {
                     try self.stack.push(value);
-                    break;
+                    break :run_instruction;
                 }
 
                 // Try get from initial values
@@ -390,61 +398,48 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                     self.pc = @as(usize, @intCast(jumpIfFalse.destination)) - 1;
                 }
             },
+            .peekAndJump => {
+                const value = try self.stack.peek();
+                self.pc = @as(usize, @intFromFloat(value.float_value)) - 1;
+            },
             .callFunc => |callFunc| {
                 // The compiler will put the number of args at the top of the stack
-                const param_count = (try self.stack.pop()).float_value;
+                const param_count = @as(usize, @intFromFloat((try self.stack.pop()).float_value));
 
-                std.log.info("Calling `{s}` with {d} param(s)", .{ callFunc.functionName, param_count });
+                if (opts.tracing) std.log.debug("Calling `{s}` with {d} param(s)", .{ callFunc.functionName, param_count });
 
-                // Practice (hardcoded)
-                if (std.mem.eql(u8, callFunc.functionName, "Bool.Not")) {
-                    // Get Param
-                    const param1 = (try self.stack.pop()).bool_value;
+                var params = try std.ArrayList(Value).initCapacity(self.allocator, param_count);
 
-                    // Run Function
-                    const ret = !param1;
-
-                    // Put Back
-                    try self.stack.push(.{ .bool_value = ret });
-                    break :run_instruction;
+                for (0..@as(usize, param_count)) |_| {
+                    const param = try self.stack.pop();
+                    try params.append(self.allocator, param);
                 }
 
-                // Test Functions (hardcoded, for now)
-                if (std.mem.eql(u8, callFunc.functionName, "Number.Multiply")) {
-                    // Get Params
-                    const param1 = (try self.stack.pop()).float_value;
-                    const param2 = (try self.stack.pop()).float_value;
+                const func = self.functions.getFunction(callFunc.functionName) orelse {
+                    std.log.err("Function `{s}` not found", .{callFunc.functionName});
+                    return error.FunctionNotFound;
+                };
 
-                    // Run Function
-                    const ret = param1 * param2;
+                const ret = func(params.items);
 
-                    // Put Back
-                    try self.stack.push(.{ .float_value = ret });
-                    break :run_instruction;
+                if (ret) |ret_val| {
+                    try self.stack.push(ret_val);
                 }
 
-                if (std.mem.eql(u8, callFunc.functionName, "add_three_operands")) {
-                    // Get Params
-                    const param1 = (try self.stack.pop()).float_value;
-                    const param2 = (try self.stack.pop()).float_value;
-                    const param3 = (try self.stack.pop()).float_value;
-
-                    // Run Function
-                    const ret = param1 + param2 + param3;
-
-                    // Put Back
-                    try self.stack.push(.{ .float_value = ret });
-                    break :run_instruction;
-                }
-
-                return error.FakeFunctions;
+                break :run_instruction;
             },
             .stop => {
                 // TODO: Unwind the callstack, and what not
                 self.state = .stopped;
                 return;
             },
-            .@"return" => return,
+            .@"return" => {
+                std.log.err("Return only partially implemented. This might be an error", .{});
+
+                // We should only do this when there's no call sites to unwind
+                self.state = .stopped;
+                return;
+            },
             else => |inst| {
                 std.log.warn("Unsupported instruction: {s}", .{@tagName(inst)});
                 return error.UnsupportedInstruction;
