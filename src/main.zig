@@ -6,13 +6,25 @@ const Yarn = zdialogue.Yarn;
 
 var lines: std.StringHashMap(zdialogue.Dialogue.Line) = undefined;
 
-fn lineHandler(_: ?*anyopaque, line_id: []const u8) void {
-    const line_data = lines.get(line_id) orelse {
+const Context = struct {
+    allocator: std.mem.Allocator,
+};
+
+fn lineHandler(ctx: ?*anyopaque, line_id: []const u8, substitutions: []const []const u8) void {
+    const self: *Context = @ptrCast(@alignCast(ctx.?));
+
+    const unsubstituted_line_data = lines.get(line_id) orelse {
         std.log.err("Line ID not found: {s}", .{line_id});
         return;
     };
 
-    std.log.info("[LineHandler] {s}", .{line_data.text});
+    const line_data = zdialogue.Dialogue.substituteLineData(self.allocator, unsubstituted_line_data.text, substitutions) catch {
+        std.log.err("Couldn't substitute line data", .{});
+        return;
+    };
+    defer self.allocator.free(line_data);
+
+    std.log.info("[LineHandler] {s}", .{line_data});
 }
 
 fn optionHandler(_: ?*anyopaque, options: []zdialogue.Option) void {
@@ -65,7 +77,12 @@ pub fn main(init: std.process.Init) !void {
 
     std.log.info("[!] Program started", .{});
 
+    var ctx = Context{
+        .allocator = arena,
+    };
+
     var vm = zdialogue.VirtualMachine.init(&program, arena, .{
+        .context = &ctx,
         .line_handler = lineHandler,
         .option_handler = optionHandler,
     });
@@ -77,7 +94,7 @@ pub fn main(init: std.process.Init) !void {
     loop: while (true) {
         try switch (vm.state) {
             .running, .waitingForContinue => {
-                try vm.run(.{ .tracing = true });
+                try vm.run(.{ .tracing = false });
             },
             .waitingOnOptionSelection => {
                 // Ask user for option

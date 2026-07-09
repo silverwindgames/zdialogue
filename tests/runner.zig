@@ -13,12 +13,16 @@ const Runner = struct {
     metadata: std.StringHashMap(zdialogue.Dialogue.Metadata),
     step_index: usize = 0,
     had_error: bool = false,
+    allocator: std.mem.Allocator,
 
     const Self = @This();
 
-    fn lineHandler(context: ?*anyopaque, line_id: []const u8) void {
+    fn lineHandler(context: ?*anyopaque, line_id: []const u8, substitutions: []const []const u8) void {
         const self: *Self = @ptrCast(@alignCast(context.?));
-        self.assertLine(line_id);
+        self.assertLine(line_id, substitutions) catch |err| {
+            std.log.err("Unrecoverable failure in line handler {any}", .{err});
+            self.had_error = true;
+        };
     }
 
     fn optionHandler(context: ?*anyopaque, options: []zdialogue.Option) void {
@@ -28,16 +32,18 @@ const Runner = struct {
         }
     }
 
-    fn assertLine(self: *Self, line_id: []const u8) void {
-        const line_data = self.lines.get(line_id) orelse {
+    fn assertLine(self: *Self, line_id: []const u8, substitutions: []const []const u8) !void {
+        const unsubstituted_line_data = self.lines.get(line_id) orelse {
             std.log.err("Line ID not found: `{s}`", .{line_id});
             self.had_error = true;
             return;
         };
 
         // const maybe_meta_data = self.metadata.get(line_id);
+        const line_data = try zdialogue.Dialogue.substituteLineData(self.allocator, unsubstituted_line_data.text, substitutions);
+        defer self.allocator.free(line_data);
 
-        std.log.info("Matching line: {s}", .{line_data.text});
+        std.log.info("Matching line: {s}", .{line_data});
 
         const current_test_plan_step = self.test_plan.steps.items[self.step_index];
         if (current_test_plan_step != .line) {
@@ -47,8 +53,8 @@ const Runner = struct {
         }
 
         const step = self.test_plan.steps.items[self.step_index];
-        if (!std.mem.eql(u8, line_data.text, step.line.expected_text)) {
-            std.log.err("Line text does not match expected text. Expected: {s}, Got: {s}", .{ step.line.expected_text, line_data.text });
+        if (!std.mem.eql(u8, line_data, step.line.expected_text)) {
+            std.log.err("Line text does not match expected text. Expected: {s}, Got: {s}", .{ step.line.expected_text, line_data });
             self.had_error = true;
         }
 
@@ -139,6 +145,7 @@ pub fn runTest(allocator: std.mem.Allocator, io: std.Io, params: TestParams) !vo
         .test_plan = try TestPlan.init_from_file(allocator, io, params.testplan),
         .lines = undefined,
         .metadata = undefined,
+        .allocator = allocator,
     };
 
     const program: Yarn.Program = zdialogue.parseProtobuf(params.yarnc, io, allocator) catch |err| {

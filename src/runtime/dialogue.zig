@@ -167,3 +167,44 @@ pub fn parseMetadataFromCsv(io: std.Io, allocator: std.mem.Allocator, path: []co
 
     return metadata_map;
 }
+
+/// Caller is responsible for freeing returned string data
+pub fn substituteLineData(
+    allocator: std.mem.Allocator,
+    unsubstituted_line_text: []const u8,
+    substitutions: []const []const u8,
+) ![]u8 {
+    var string_builder = try std.ArrayList(u8).initCapacity(allocator, unsubstituted_line_text.len);
+
+    var i: usize = 0;
+    var last_segment_start: usize = 0;
+    while (i < unsubstituted_line_text.len) {
+        const char = unsubstituted_line_text[i];
+
+        // TODO: This doesn't support two digit substitutions
+        if (char == '{' and unsubstituted_line_text[i + 2] == '}') {
+            const sub_index = try std.fmt.parseInt(usize, &.{unsubstituted_line_text[i + 1]}, 10);
+            if (sub_index > substitutions.len) {
+                std.log.err("Index '{d}' is less than number of substitutions '{d}'", .{ sub_index, substitutions.len });
+                return error.InvalidSubstitutionIndex;
+            }
+            const slice = unsubstituted_line_text[last_segment_start..i];
+            try string_builder.appendSlice(allocator, slice);
+
+            const substitution = substitutions[sub_index];
+            try string_builder.appendSlice(allocator, substitution);
+
+            i += 3;
+            last_segment_start = i;
+            continue;
+        }
+
+        i += 1;
+    }
+
+    if (last_segment_start < unsubstituted_line_text.len) {
+        try string_builder.appendSlice(allocator, unsubstituted_line_text[last_segment_start..]);
+    }
+
+    return string_builder.toOwnedSlice(allocator);
+}

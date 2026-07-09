@@ -8,7 +8,7 @@ const Yarn = @import("../proto/Yarn.pb.zig");
 const MAX_OPTIONS = 12;
 const MAX_STACK = 256; // probably enough right?
 
-pub const LineHandler = *const fn (context: ?*anyopaque, lineID: []const u8) void;
+pub const LineHandler = *const fn (context: ?*anyopaque, lineID: []const u8, substitutions: []const []const u8) void;
 pub const OptionHandler = *const fn (context: ?*anyopaque, options: []Option) void;
 
 const ExecutionState = enum {
@@ -45,8 +45,11 @@ pub const Callbacks = struct {
     option_handler: ?OptionHandler = null,
 };
 
-pub fn defaultLineHandler(_: ?*anyopaque, lineID: []const u8) void {
+pub fn defaultLineHandler(_: ?*anyopaque, lineID: []const u8, substitutions: []const []const u8) void {
     std.log.info("[Default Line Handler] {s}", .{lineID});
+    for (substitutions) |sub| {
+        std.log.info(" - Substitute: {s}", .{sub});
+    }
 }
 
 pub fn defaultOptionHandler(_: ?*anyopaque, options: []Option) void {
@@ -280,7 +283,26 @@ pub fn run(self: *Self, opts: RunOpts) !void {
 
         run_instruction: switch (instruction.InstructionType.?) {
             .runLine => |runLine| {
-                self.line_handler(self.context, runLine.lineID);
+                const num_subs = @as(usize, @intCast(runLine.substitutionCount));
+                var substitutions = try std.ArrayList([]u8).initCapacity(self.allocator, num_subs);
+
+                for (0..num_subs) |_| {
+                    const value = try self.stack.pop();
+
+                    // wrong order
+                    try substitutions.append(self.allocator, switch (value) {
+                        .string_value => |sv| try self.allocator.dupe(u8, sv.str),
+                        .float_value => |fv| try std.fmt.allocPrint(self.allocator, "{d}", .{fv}),
+                        .bool_value => |bv| try std.fmt.allocPrint(self.allocator, "{}", .{bv}),
+                    });
+                }
+
+                self.line_handler(self.context, runLine.lineID, substitutions.items);
+
+                for (substitutions.items) |item| {
+                    self.allocator.free(item);
+                }
+                substitutions.deinit(self.allocator);
             },
             .addOption => |addOption| {
                 // TODO: Condition stuff
@@ -369,9 +391,52 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                 }
             },
             .callFunc => |callFunc| {
-                std.log.info("Pretending to call {s}", .{callFunc.functionName});
-                // what if we just don't do anything
-                // break :run_instruction;
+                // The compiler will put the number of args at the top of the stack
+                const param_count = (try self.stack.pop()).float_value;
+
+                std.log.info("Calling `{s}` with {d} param(s)", .{ callFunc.functionName, param_count });
+
+                // Practice (hardcoded)
+                if (std.mem.eql(u8, callFunc.functionName, "Bool.Not")) {
+                    // Get Param
+                    const param1 = (try self.stack.pop()).bool_value;
+
+                    // Run Function
+                    const ret = !param1;
+
+                    // Put Back
+                    try self.stack.push(.{ .bool_value = ret });
+                    break :run_instruction;
+                }
+
+                // Test Functions (hardcoded, for now)
+                if (std.mem.eql(u8, callFunc.functionName, "Number.Multiply")) {
+                    // Get Params
+                    const param1 = (try self.stack.pop()).float_value;
+                    const param2 = (try self.stack.pop()).float_value;
+
+                    // Run Function
+                    const ret = param1 * param2;
+
+                    // Put Back
+                    try self.stack.push(.{ .float_value = ret });
+                    break :run_instruction;
+                }
+
+                if (std.mem.eql(u8, callFunc.functionName, "add_three_operands")) {
+                    // Get Params
+                    const param1 = (try self.stack.pop()).float_value;
+                    const param2 = (try self.stack.pop()).float_value;
+                    const param3 = (try self.stack.pop()).float_value;
+
+                    // Run Function
+                    const ret = param1 + param2 + param3;
+
+                    // Put Back
+                    try self.stack.push(.{ .float_value = ret });
+                    break :run_instruction;
+                }
+
                 return error.FakeFunctions;
             },
             .stop => {
@@ -388,7 +453,7 @@ pub fn run(self: *Self, opts: RunOpts) !void {
 
         self.pc += 1;
 
-        std.log.debug("PC after execution: {d}, Node: {s}", .{ self.pc, self.node.name });
+        if (opts.tracing) std.log.debug("PC after execution: {d}, Node: {s}", .{ self.pc, self.node.name });
 
         if (self.pc >= self.node.instructions.items.len) {
             // TODO: Handle node completion properly, including detours and branching
