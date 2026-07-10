@@ -1,221 +1,16 @@
 const std = @import("std");
 const vm = @import("vm.zig");
 
+const func_bool = @import("functions/bool.zig");
+const func_number = @import("functions/number.zig");
+const func_enum = @import("functions/enum.zig");
+const func_builtin = @import("functions/builtin.zig");
+const func_test_only = @import("functions/test_only.zig");
+
 hash_map: std.StringHashMap(vm.YarnFn),
 allocator: std.mem.Allocator,
 
 const Self = @This();
-
-fn boolNot(param: bool) bool {
-    return !param;
-}
-
-// Bool.Not
-fn boolNotYarnFn(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 1);
-    std.debug.assert(params[0] == vm.Value.bool_value);
-
-    const param1 = params[0].bool_value;
-
-    const ret = boolNot(param1);
-
-    return .{ .bool_value = ret };
-}
-
-// Number.EqualTo
-fn number_equal_to(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 == param2;
-
-    return .{ .bool_value = ret };
-}
-
-// Number.Add
-fn number_add(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 + param2;
-
-    return .{ .float_value = ret };
-}
-
-// Number.Subtract
-fn number_subtract(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 - param2;
-
-    return .{ .float_value = ret };
-}
-
-// Number.Divide
-fn number_divide(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 / param2;
-
-    return .{ .float_value = ret };
-}
-
-// Number.Multiply
-fn number_multiply(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 * param2;
-
-    return .{ .float_value = ret };
-}
-
-// Number.Modulus
-fn number_modulus(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1: i64 = @intFromFloat(params[0].float_value);
-    const param2: i64 = @intFromFloat(params[1].float_value);
-
-    // @mod? @rem? Have a read of https://torstencurdt.com/tech/modulo-of-negative-numbers/
-    // C# uses "truncated division" for modulus, so we need @rem instead of @mod to match it.
-    const ret = @rem(param1, param2);
-
-    return .{ .float_value = @floatFromInt(ret) };
-}
-
-// Number.UnaryMinus
-fn number_unary_minus(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 1);
-    std.debug.assert(params[0] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-
-    const ret = -param1;
-
-    return .{ .float_value = ret };
-}
-
-// Number.GreaterThan
-fn number_greater_than(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 > param2;
-
-    return .{ .bool_value = ret };
-}
-
-// Number.GreaterThanOrEqualTo
-fn number_greater_than_or_equal_to(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 >= param2;
-
-    return .{ .bool_value = ret };
-}
-
-// Number.LessThan
-fn number_less_than(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 < param2;
-
-    return .{ .bool_value = ret };
-}
-
-// Number.LessThanOrEqualTo
-fn number_less_than_or_equal_to(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-
-    const ret = param1 <= param2;
-
-    return .{ .bool_value = ret };
-}
-
-// Enum.EqualTo
-fn enum_equal_to(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 2);
-
-    const ret: bool = switch (params[0]) {
-        .string_value => |a_str| blk: {
-            std.debug.assert(params[1] == vm.Value.string_value);
-            break :blk std.mem.eql(u8, a_str.str, params[1].string_value.str);
-        },
-        else => blk: {
-            std.debug.assert(params[0] == vm.Value.float_value);
-            std.debug.assert(params[1] == vm.Value.float_value);
-            break :blk params[0].float_value == params[1].float_value;
-        },
-    };
-
-    return .{ .bool_value = ret };
-}
-
-// Enum.NotEqualTo
-fn enum_not_equal_to(params: []vm.Value) ?vm.Value {
-    return .{ .bool_value = !(enum_equal_to(params).?.bool_value) };
-}
-
-// Test Only: Add Three Operands
-// TODO: Move to tests/ directory
-fn add_three_operands(params: []vm.Value) ?vm.Value {
-    std.debug.assert(params.len == 3);
-    std.debug.assert(params[0] == vm.Value.float_value);
-    std.debug.assert(params[1] == vm.Value.float_value);
-    std.debug.assert(params[2] == vm.Value.float_value);
-
-    const param1 = params[0].float_value;
-    const param2 = params[1].float_value;
-    const param3 = params[2].float_value;
-
-    const ret = param1 + param2 + param3;
-
-    return .{ .float_value = ret };
-}
 
 fn registerFunction(self: *Self, name: []const u8, func: vm.YarnFn) !void {
     const key = try self.allocator.dupe(u8, name);
@@ -229,24 +24,48 @@ pub fn init(allocator: std.mem.Allocator) !Self {
     };
 
     // Register Standard Library
-    try func_lib.registerFunction("Bool.Not", &boolNotYarnFn);
-    try func_lib.registerFunction("Number.EqualTo", &number_equal_to);
-    try func_lib.registerFunction("Number.Add", &number_add);
-    try func_lib.registerFunction("Number.Subtract", &number_subtract);
-    try func_lib.registerFunction("Number.Divide", &number_divide);
-    try func_lib.registerFunction("Number.Multiply", &number_multiply);
-    try func_lib.registerFunction("Number.Modulus", &number_modulus);
-    try func_lib.registerFunction("Number.UnaryMinus", &number_unary_minus);
-    try func_lib.registerFunction("Number.GreaterThan", &number_greater_than);
-    try func_lib.registerFunction("Number.GreaterThanOrEqualTo", &number_greater_than_or_equal_to);
-    try func_lib.registerFunction("Number.LessThan", &number_less_than);
-    try func_lib.registerFunction("Number.LessThanOrEqualTo", &number_less_than_or_equal_to);
-    try func_lib.registerFunction("Enum.EqualTo", &enum_equal_to);
-    try func_lib.registerFunction("Enum.NotEqualTo", &enum_not_equal_to);
+    try func_lib.registerFunction("Bool.Not", &func_bool.boolNot);
+    try func_lib.registerFunction("Number.EqualTo", &func_number.numberEqualTo);
+    try func_lib.registerFunction("Number.Add", &func_number.numberAdd);
+    try func_lib.registerFunction("Number.Subtract", &func_number.numberSubtract);
+    try func_lib.registerFunction("Number.Divide", &func_number.numberDivide);
+    try func_lib.registerFunction("Number.Multiply", &func_number.numberMultiply);
+    try func_lib.registerFunction("Number.Modulus", &func_number.numberModulus);
+    try func_lib.registerFunction("Number.UnaryMinus", &func_number.numberUnaryMinus);
+    try func_lib.registerFunction("Number.GreaterThan", &func_number.numberGreaterThan);
+    try func_lib.registerFunction("Number.GreaterThanOrEqualTo", &func_number.numberGreaterThanOrEqualTo);
+    try func_lib.registerFunction("Number.LessThan", &func_number.numberLessThan);
+    try func_lib.registerFunction("Number.LessThanOrEqualTo", &func_number.numberLessThanOrEqualTo);
+    try func_lib.registerFunction("Enum.EqualTo", &func_enum.enumEqualTo);
+    try func_lib.registerFunction("Enum.NotEqualTo", &func_enum.enumNotEqualTo);
+
+    try func_lib.registerFunction("string", &func_builtin.convertToString);
+    try func_lib.registerFunction("number", &func_builtin.convertToNumber);
+    try func_lib.registerFunction("format_invariant", &func_builtin.formatInvariant);
+    try func_lib.registerFunction("bool", &func_builtin.convertToBool);
+
+    try func_lib.registerFunction("random", &func_builtin.random);
+    try func_lib.registerFunction("random_range", &func_builtin.randomRange);
+    try func_lib.registerFunction("random_range_float", &func_builtin.randomRangeFloat);
+    try func_lib.registerFunction("dice", &func_builtin.yarnDice);
+
+    try func_lib.registerFunction("min", &func_builtin.min);
+    try func_lib.registerFunction("max", &func_builtin.max);
+
+    try func_lib.registerFunction("round", &func_builtin.round);
+    try func_lib.registerFunction("round_places", &func_builtin.roundPlaces);
+    try func_lib.registerFunction("floor", &func_builtin.floor);
+    try func_lib.registerFunction("ceil", &func_builtin.ceil);
+    try func_lib.registerFunction("inc", &func_builtin.inc);
+    try func_lib.registerFunction("dec", &func_builtin.dec);
+    try func_lib.registerFunction("decimal", &func_builtin.decimal);
+    try func_lib.registerFunction("int", &func_builtin.int);
+
+    try func_lib.registerFunction("format", &func_builtin.format);
 
     // TEST ONLY
     // TODO: Should be declared in the tests directory
-    try func_lib.registerFunction("add_three_operands", &add_three_operands);
+    try func_lib.registerFunction("add_three_operands", &func_test_only.addThreeOperands);
 
     return func_lib;
 }

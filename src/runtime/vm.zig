@@ -42,6 +42,10 @@ pub const Option = struct {
 };
 
 pub const Callbacks = struct {
+    /// Opaque, user-supplied data. This is threaded through to
+    /// `line_handler`, `option_handler`, and any registered `YarnFn`
+    /// (as its `user_data` parameter) - handy for giving custom functions
+    /// access to game-specific state without any global variables.
     context: ?*anyopaque = null,
     line_handler: ?LineHandler = null,
     option_handler: ?OptionHandler = null,
@@ -66,7 +70,22 @@ pub const Value = union(enum) {
     string_value: *String,
 };
 
-pub const YarnFn = *const fn (params: []Value) ?Value;
+/// Context passed to every `YarnFn` when it's called.
+pub const Context = struct {
+    allocator: std.mem.Allocator,
+    io: std.Io,
+    user_data: ?*anyopaque,
+    vm: *Self,
+
+    /// Allocates a new string using the VM's own string arena (`Vm.strings`),
+    /// so it's tracked and cleaned up the same way as every other string
+    /// the VM produces.
+    pub fn allocString(self: Context, text: []const u8) !*String {
+        return self.vm.allocString(text);
+    }
+};
+
+pub const YarnFn = *const fn (params: []Value, ctx: Context) ?Value;
 
 const Stack = struct {
     items: [MAX_STACK]Value,
@@ -175,7 +194,7 @@ const VariablesTable = struct {
     }
 };
 
-const String = struct {
+pub const String = struct {
     str: []u8,
     next: ?*String,
 };
@@ -189,6 +208,7 @@ stack: Stack,
 
 // Heap
 allocator: std.mem.Allocator,
+io: std.Io,
 strings: ?*String,
 functions: FunctionsTable,
 variables: VariablesTable,
@@ -203,7 +223,7 @@ option_handler: OptionHandler,
 
 const Self = @This();
 
-pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, callbacks: Callbacks) !Self {
+pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, io: std.Io, callbacks: Callbacks) !Self {
     std.debug.assert(program.nodes.items.len > 0);
     return Self{
         // VM State
@@ -215,6 +235,7 @@ pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, callback
 
         // Heap
         .allocator = allocator,
+        .io = io,
         .strings = null,
         .functions = try FunctionsTable.init(allocator),
         .variables = VariablesTable.init(allocator),
@@ -423,7 +444,14 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                     return error.FunctionNotFound;
                 };
 
-                const ret = func(params);
+                const ctx = Context{
+                    .allocator = self.allocator,
+                    .io = self.io,
+                    .user_data = self.context,
+                    .vm = self,
+                };
+
+                const ret = func(params, ctx);
 
                 if (ret) |ret_val| {
                     if (opts.tracing) std.log.debug("Function `{s}` returned a value: {any}", .{ callFunc.functionName, ret_val });

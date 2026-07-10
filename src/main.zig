@@ -84,7 +84,7 @@ pub fn main(init: std.process.Init) !void {
         .allocator = arena,
     };
 
-    var vm = try zdialogue.VirtualMachine.init(&program, arena, .{
+    var vm = try zdialogue.VirtualMachine.init(&program, arena, io, .{
         .context = &ctx,
         .line_handler = lineHandler,
         .option_handler = optionHandler,
