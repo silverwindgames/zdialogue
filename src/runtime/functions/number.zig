@@ -19,6 +19,11 @@ pub fn numberEqualTo(params: []vm.Value, ctx: vm.Context) ?vm.Value {
     return .{ .bool_value = ret };
 }
 
+// Number.NotEqualTo(num1, num2)
+pub fn numberNotEqualTo(params: []vm.Value, ctx: vm.Context) ?vm.Value {
+    return .{ .bool_value = !(numberEqualTo(params, ctx).?.bool_value) };
+}
+
 // Number.Add(num1, num2)
 pub fn numberAdd(params: []vm.Value, ctx: vm.Context) ?vm.Value {
     _ = ctx;

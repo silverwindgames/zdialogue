@@ -68,12 +68,12 @@ pub fn main(init: std.process.Init) !void {
 
     try stdout_writer.flush(); // Don't forget to flush!
 
-    const program: Yarn.Program = zdialogue.parseProtobuf("demo-simple/Project.yarnc", io, arena) catch |err| {
+    const program: Yarn.Program = zdialogue.parseProtobuf("demo/Project.yarnc", io, arena) catch |err| {
         std.log.err("Failed to parse protobuf: {any}", .{err});
         return err;
     };
 
-    lines = zdialogue.Dialogue.parseDialogueFromCsv(io, arena, "demo-simple/Project-Lines.csv") catch |err| {
+    lines = zdialogue.Dialogue.parseDialogueFromCsv(io, arena, "demo/Project-Lines.csv") catch |err| {
         std.log.err("Failed to parse dialogue CSV: {any}", .{err});
         return err;
     };

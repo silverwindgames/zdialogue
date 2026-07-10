@@ -3,6 +3,7 @@ const vm = @import("vm.zig");
 
 const func_bool = @import("functions/bool.zig");
 const func_number = @import("functions/number.zig");
+const func_string = @import("functions/string.zig");
 const func_enum = @import("functions/enum.zig");
 const func_builtin = @import("functions/builtin.zig");
 const func_test_only = @import("functions/test_only.zig");
@@ -24,8 +25,14 @@ pub fn init(allocator: std.mem.Allocator) !Self {
     };
 
     // Register Standard Library
+    try func_lib.registerFunction("Bool.EqualTo", &func_bool.boolEqualTo);
+    try func_lib.registerFunction("Bool.NotEqualTo", &func_bool.boolNotEqualTo);
+    try func_lib.registerFunction("Bool.And", &func_bool.boolAnd);
+    try func_lib.registerFunction("Bool.Or", &func_bool.boolOr);
+    try func_lib.registerFunction("Bool.Xor", &func_bool.boolXor);
     try func_lib.registerFunction("Bool.Not", &func_bool.boolNot);
     try func_lib.registerFunction("Number.EqualTo", &func_number.numberEqualTo);
+    try func_lib.registerFunction("Number.NotEqualTo", &func_number.numberNotEqualTo);
     try func_lib.registerFunction("Number.Add", &func_number.numberAdd);
     try func_lib.registerFunction("Number.Subtract", &func_number.numberSubtract);
     try func_lib.registerFunction("Number.Divide", &func_number.numberDivide);
@@ -36,6 +43,9 @@ pub fn init(allocator: std.mem.Allocator) !Self {
     try func_lib.registerFunction("Number.GreaterThanOrEqualTo", &func_number.numberGreaterThanOrEqualTo);
     try func_lib.registerFunction("Number.LessThan", &func_number.numberLessThan);
     try func_lib.registerFunction("Number.LessThanOrEqualTo", &func_number.numberLessThanOrEqualTo);
+    try func_lib.registerFunction("String.Add", &func_string.stringAdd);
+    try func_lib.registerFunction("String.EqualTo", &func_string.stringEqualTo);
+    try func_lib.registerFunction("String.NotEqualTo", &func_string.stringNotEqualTo);
     try func_lib.registerFunction("Enum.EqualTo", &func_enum.enumEqualTo);
     try func_lib.registerFunction("Enum.NotEqualTo", &func_enum.enumNotEqualTo);
 
