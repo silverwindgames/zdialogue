@@ -301,6 +301,11 @@ pub const RunOpts = struct {
 };
 
 pub fn run(self: *Self, opts: RunOpts) !void {
+    if (self.state == .deliveringContent) {
+        self.state = .running;
+        return; // Prevent recursion
+    }
+
     self.state = .running;
 
     while (self.state == .running) {
@@ -326,7 +331,16 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                     });
                 }
 
+                // Anti-recursion guard while we're sending lines to the game
+                self.state = .deliveringContent;
+
                 self.line_handler(self.context, runLine.lineID, substitutions.items);
+
+                // If the game has already called continue() while we were delivering content,
+                // count it here instead of going back to the waitingForContinue state.
+                if (self.state == .deliveringContent) {
+                    self.state = .waitingForContinue;
+                }
 
                 for (substitutions.items) |item| {
                     self.allocator.free(item);
@@ -341,8 +355,14 @@ pub fn run(self: *Self, opts: RunOpts) !void {
                 };
             },
             .showOptions => {
-                self.option_handler(self.context, self.options.items());
                 self.state = .waitingOnOptionSelection;
+                self.option_handler(self.context, self.options.items());
+
+                if (self.state == .waitingForContinue) {
+                    // If the game has already called setSelectedOption() while we were delivering options,
+                    // we can go straight back to running.
+                    self.state = .running;
+                }
             },
             .runNode => |runNode| {
                 // TODO: Detours and branching and stuff

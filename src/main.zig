@@ -96,7 +96,14 @@ pub fn main(init: std.process.Init) !void {
 
     loop: while (true) {
         try switch (vm.state) {
-            .running, .waitingForContinue => {
+            .running => {
+                try vm.run(.{ .tracing = use_tracing });
+            },
+            .waitingForContinue => {
+                // Prompt for user input
+                std.debug.print("Press Enter to continue...", .{});
+                _ = try stdin_reader.interface.takeDelimiter('\n');
+
                 try vm.run(.{ .tracing = use_tracing });
             },
             .waitingOnOptionSelection => {
@@ -108,6 +115,7 @@ pub fn main(init: std.process.Init) !void {
                         continue;
                     };
                     try vm.setSelectedOption(user_input);
+                    try vm.run(.{ .tracing = use_tracing });
                 } else {
                     std.log.err("Failed to read user input.", .{});
                 }
