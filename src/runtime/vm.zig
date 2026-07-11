@@ -227,7 +227,7 @@ pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, io: std.
     std.debug.assert(program.nodes.items.len > 0);
     return Self{
         // VM State
-        .state = .running,
+        .state = .stopped,
         .program = program,
         .node = &program.nodes.items[0].value.?,
         .pc = 0,
@@ -248,6 +248,14 @@ pub fn init(program: *const Yarn.Program, allocator: std.mem.Allocator, io: std.
         .line_handler = if (callbacks.line_handler) |cb| cb else defaultLineHandler,
         .option_handler = if (callbacks.option_handler) |cb| cb else defaultOptionHandler,
     };
+}
+
+pub fn reset(self: *Self) void {
+    self.state = .stopped;
+    self.node = &self.program.nodes.items[0].value.?;
+    self.pc = 0;
+    self.stack.top = 0;
+    self.options.clear();
 }
 
 pub fn deinit(self: *Self) void {
